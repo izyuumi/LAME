@@ -1,14 +1,11 @@
+/** @type {import('tailwindcss').Config} */
 const config = {
-  content: [
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/containers/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,t s,jsx,tsx,mdx}",
-  ],
-  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  // darkMode: "class",
   theme: {
     extend: {},
-    plugins: [],
   },
+  plugins: [require("daisyui")],
 };
 
 export default config;

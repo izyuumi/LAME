@@ -10,11 +10,15 @@
     "version": "0.0.0"
   },
   "tauri": {
+    "macOSPrivateApi": true,
     "allowlist": {
       "all": false,
       "shell": {
         "all": false,
         "open": true
+      },
+      "window": {
+        "all": true
       }
     },
     "bundle": {
@@ -36,9 +40,14 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "lame",
+        "title": "LAME",
+        "hiddenTitle": true,
         "width": 800,
-        "height": 600
+        "height": 600,
+        "decorations": true,
+        "transparent": true,
+        "alwaysOnTop": false,
+        "focus": false
       }
     ]
   }
