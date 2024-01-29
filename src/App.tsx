@@ -1,48 +1,29 @@
-import React, { ReactNode, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./styles.css";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  NavLink,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Menu } from "@/components/Menu";
+import { Home, Onboard, Dashboard } from "@/pages";
 
-type Page = {
-  path: string;
-  component: ReactNode;
-};
-
-const pages: Page[] = [
+const router = createBrowserRouter([
   {
-    path: "/",
-    component: <div>Home</div>,
+    index: true,
+    element: <Home />,
   },
   {
-    path: "/about",
-    component: <div>About</div>,
+    path: "/onboarding",
+    element: <Onboard />,
   },
-];
+  {
+    path: "/dashboard/:vaultid",
+    element: <Dashboard />,
+  },
+]);
 
 function App() {
-  const [openTab, setOpenTab] = useState(true);
-
-  // async function greet() {
-  //   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  //   setGreetMsg(await invoke("greet", { name }));
-  // }
-
   return (
-    <div>
-      <Router>
-        <Routes>
-          {pages.map((page) => (
-            <Route path={page.path} element={page.component} />
-          ))}
-        </Routes>
-      </Router>
+    <div className="flex">
+      <Menu />
+      <RouterProvider router={router} />
     </div>
   );
 }
