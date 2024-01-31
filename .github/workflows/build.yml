@@ -15,17 +15,6 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - name: Check Secrets
-        run: |
-          if [[ -z "${{ secrets.APPLE_CERTIFICATE }}" ]]; then echo "Missing APPLE_CERTIFICATE secret"; exit 1; fi
-          if [[ -z "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" ]]; then echo "Missing APPLE_CERTIFICATE_PASSWORD secret"; exit 1; fi
-          if [[ -z "${{ secrets.APPLE_SIGNING_IDENTITY }}" ]]; then echo "Missing APPLE_SIGNING_IDENTITY secret"; exit 1; fi
-          if [[ -z "${{ secrets.APPLE_ID }}" ]]; then echo "Missing APPLE_ID secret"; exit 1; fi
-          if [[ -z "${{ secrets.APPLE_PASSWORD }}" ]]; then echo "Missing APPLE_PASSWORD secret"; exit 1; fi
-          if [[ -z "${{ secrets.APPLE_TEAM_ID }}" ]]; then echo "Missing APPLE_TEAM_ID secret"; exit 1; fi
-          echo "All secrets exist"
-        shell: bash
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
