@@ -2,7 +2,9 @@ import { open } from "@tauri-apps/api/dialog";
 import { appWindow } from "@tauri-apps/api/window";
 
 export function Onboard() {
-	appWindow.listen("tauri://file-drop", (event) => { });
+	appWindow.listen("tauri://file-drop", (event) => {
+		console.log(event);
+	});
 
 	const selectVault = async () => {
 		const selected = await open({
