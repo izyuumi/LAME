@@ -18,7 +18,7 @@ jobs:
       - name: Check Secrets
         run: |
           secretList=("GITHUB_TOKEN" "APPLE_CERTIFICATE" "APPLE_CERTIFICATE_PASSWORD" "APPLE_SIGNING_IDENTITY" "APPLE_ID" "APPLE_PASSWORD" "APPLE_TEAM_ID")
-          for secret in ${secretList[@]}; do
+          for $secret in ${secretList[@]}; do
             if [[ -z "${{ secrets[$secret] }}" ]]; then
             echo "Missing secret $secret"
             exit 1
