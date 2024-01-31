@@ -17,13 +17,13 @@ jobs:
     steps:
       - name: Check Secrets
         run: |
-          secretList=("GITHUB_TOKEN" "APPLE_CERTIFICATE" "APPLE_CERTIFICATE_PASSWORD" "APPLE_SIGNING_IDENTITY" "APPLE_ID" "APPLE_PASSWORD" "APPLE_TEAM_ID")
-          for $secret in ${secretList[@]}; do
-            if [[ -z "${{ secrets[$secret] }}" ]]; then
-            echo "Missing secret $secret"
-            exit 1
-            fi
-          done
+          if [[ -z "${{ secrets.GITHUB_TOKEN }}" ]]; then echo "Missing GITHUB_TOKEN secret"; exit 1; fi
+          if [[ -z "${{ secrets.APPLE_CERTIFICATE }}" ]]; then echo "Missing APPLE_CERTIFICATE secret"; exit 1; fi
+          if [[ -z "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" ]]; then echo "Missing APPLE_CERTIFICATE_PASSWORD secret"; exit 1; fi
+          if [[ -z "${{ secrets.APPLE_SIGNING_IDENTITY }}" ]]; then echo "Missing APPLE_SIGNING_IDENTITY secret"; exit 1; fi
+          if [[ -z "${{ secrets.APPLE_ID }}" ]]; then echo "Missing APPLE_ID secret"; exit 1; fi
+          if [[ -z "${{ secrets.APPLE_PASSWORD }}" ]]; then echo "Missing APPLE_PASSWORD secret"; exit 1; fi
+          if [[ -z "${{ secrets.APPLE_TEAM_ID }}" ]]; then echo "Missing APPLE_TEAM_ID secret"; exit 1; fi
           echo "All secrets exist"
         shell: bash
 
