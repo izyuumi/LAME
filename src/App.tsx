@@ -2,12 +2,12 @@ import "./styles.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Menu } from "@/components/Menu";
-import { Home, Onboard, Dashboard } from "@/pages";
+import { Onboard, Dashboard } from "@/pages";
 
 const router = createBrowserRouter([
   {
     index: true,
-    element: <Home />,
+    element: <Onboard />, // TODO: check whether user was in a vault
   },
   {
     path: "/onboarding",
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="flex">
-      <Menu />
+      <Menu /> {/* TODO: hide when onboarding */}
       <RouterProvider router={router} />
     </div>
   );

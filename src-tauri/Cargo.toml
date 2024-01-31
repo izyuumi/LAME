@@ -13,9 +13,10 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.5", features = [ "window-all", "macos-private-api", "shell-open"] }
+tauri = { version = "1.5", features = [ "dialog-all", "path-all", "fs-all", "window-all", "macos-private-api"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+tokio = "1.35.1"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
