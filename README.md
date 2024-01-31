@@ -1,3 +1,5 @@
 # LAME
 
-Yet, another markdown editor made with Tauri
+LOL Another Markdown Editor
+
+Made with Tauri 🦀
