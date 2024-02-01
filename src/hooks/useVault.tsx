@@ -1,10 +1,12 @@
+import { checkConfigFile } from "@/utils/config";
 import React, { createContext, useContext, useMemo, useState } from "react";
+import { useSidebar } from ".";
 
 interface VaultConfig { }
 
 interface VaultContext {
 	currentVaultPath: string | null;
-	setCurrentVaultPath: (path: string) => void;
+	openVaultFromPath: (path: string) => Promise<void>;
 	vaultConfig: VaultConfig;
 	setVaultConfig: (config: VaultConfig) => void;
 }
@@ -15,10 +17,24 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
 	const [currentVaultPath, setCurrentVaultPath] = useState<string | null>(null);
 	const [vaultConfig, setVaultConfig] = useState<VaultConfig>({});
 
+	const { openSidebar } = useSidebar();
+
+	/**
+	 * Opens a vault from a given path
+	 * @param {string} path
+	 *
+	 * @returns {Promise<void>}
+	 */
+	const openVaultFromPath = async (path: string): Promise<void> => {
+		await checkConfigFile(path);
+		setCurrentVaultPath(path);
+		openSidebar();
+	};
+
 	const value = useMemo(
 		() => ({
 			currentVaultPath,
-			setCurrentVaultPath,
+			openVaultFromPath,
 			vaultConfig,
 			setVaultConfig,
 		}),
