@@ -38,7 +38,6 @@ jobs:
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
-        args: --verbose
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
@@ -53,3 +52,4 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
+        	args: --verbose
