@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSidebar, useVault } from "@/hooks";
 import { open } from "@tauri-apps/api/dialog";
 import { appWindow } from "@tauri-apps/api/window";
-import { readDir, exists, writeTextFile } from "@tauri-apps/api/fs";
+import { exists, writeTextFile } from "@tauri-apps/api/fs";
 import { useNavigate } from "react-router-dom";
 
 export function Onboard() {
@@ -15,7 +15,9 @@ export function Onboard() {
 	}, []);
 
 	appWindow.listen("tauri://file-drop", async (event) => {
-		console.log(event.payload);
+		if (Array.isArray(event.payload) && event.payload.length > 0) {
+			await initVault(event.payload[0]);
+		}
 	});
 
 	/**

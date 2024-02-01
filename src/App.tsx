@@ -1,4 +1,4 @@
-import "./styles.css";
+import "@/styles/main.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Sidebar } from "@/components/Sidebar";
