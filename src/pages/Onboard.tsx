@@ -1,18 +1,61 @@
+import { useEffect } from "react";
+import { useSidebar, useVault } from "@/hooks";
 import { open } from "@tauri-apps/api/dialog";
 import { appWindow } from "@tauri-apps/api/window";
+import { readDir, exists, writeTextFile } from "@tauri-apps/api/fs";
+import { useNavigate } from "react-router-dom";
 
 export function Onboard() {
-	appWindow.listen("tauri://file-drop", (event) => {
-		console.log(event);
+	const { closeSidebar, openSidebar } = useSidebar();
+	const { setCurrentVaultPath } = useVault();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		closeSidebar();
+	}, []);
+
+	appWindow.listen("tauri://file-drop", async (event) => {
+		console.log(event.payload);
 	});
 
-	const selectVault = async () => {
+	/**
+	 * Opens a file dialog to select a directory
+	 * @returns {Promise<void>}
+	 */
+	const selectVault = async (): Promise<void> => {
 		const selected = await open({
 			title: "Select a vault",
 			multiple: false,
 			directory: true,
 		});
-		console.log(selected);
+		if (selected === null) return;
+		if (Array.isArray(selected) && selected.length === 0) return;
+		if (typeof selected === "string") {
+			await initVault(selected);
+		} else {
+			if (selected.length < 1) return;
+			await initVault(selected[0]);
+		}
+	};
+
+	const initVault = async (path: string) => {
+		await checkConfigFile(path);
+		setCurrentVaultPath(path);
+		navigate(`/dashboard`);
+		openSidebar();
+	};
+
+	/**
+	 * Check if the `conf.lame` config file exists, if not creates it in the selected directory
+	 * @param {string} path
+	 * @returns {Promise<void>}
+	 *
+	 */
+	const checkConfigFile = async (path: string) => {
+		const configFileExists = await exists(`${path}/conf.lame`);
+		if (!configFileExists) {
+			await writeTextFile(`${path}/conf.lame`, JSON.stringify({}));
+		}
 	};
 
 	return (

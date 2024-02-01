@@ -43,16 +43,21 @@
     },
     "windows": [
       {
-        "fullscreen": false,
-        "resizable": true,
         "title": "LAME",
         "hiddenTitle": true,
-        "width": 800,
-        "height": 600,
-        "decorations": false,
-        "transparent": true,
+        "width": 1000,
+        "height": 725,
+        "minWidth": 768,
+        "minHeight": 500,
+        "resizable": true,
+        "fullscreen": false,
         "alwaysOnTop": false,
-        "focus": false
+        "focus": false,
+        "visible": true,
+        "fileDropEnabled": true,
+        "decorations": true,
+        "transparent": true,
+        "center": true
       }
     ]
   }
