@@ -1,37 +1,38 @@
 import { useSidebar } from "@/hooks";
-import { Settings } from "lucide-react";
+import { Settings, Vault } from "lucide-react";
 
 function Sidebar() {
-	const { sidebarIsOpen } = useSidebar();
+  const { sidebarIsOpen } = useSidebar();
 
-	return (
-		<>
-			{sidebarIsOpen !== "closed" && (
-				<div className="h-screen bg-base-200 flex flex-col">
-					<div className="h-full" />
-					<ul className="menu text-base-content p-1">
-						<SidebarItem icon={<Settings size={16} />} text="Settings" />
-					</ul>
-				</div>
-			)}
-		</>
-	);
+  return (
+    <>
+      {sidebarIsOpen !== "closed" && (
+        <div className="h-screen bg-base-200 flex flex-col">
+          <div className="h-full" />
+          <ul className="menu text-base-content p-1">
+            <SidebarItem icon={<Vault size={16} />} text="Vault" />
+            <SidebarItem icon={<Settings size={16} />} text="Settings" />
+          </ul>
+        </div>
+      )}
+    </>
+  );
 }
 
 function SidebarItem({
-	icon,
-	text,
-	onClick,
+  icon,
+  text,
+  onClick,
 }: {
-	icon: React.ReactNode;
-	text: string;
-	onClick?: () => void;
+  icon: React.ReactNode;
+  text: string;
+  onClick?: () => void;
 }) {
-	return (
-		<li onClick={onClick}>
-			<span className="p-2">{icon}</span>
-		</li>
-	);
+  return (
+    <li onClick={onClick}>
+      <span className="p-2">{icon}</span>
+    </li>
+  );
 }
 
 export default Sidebar;
