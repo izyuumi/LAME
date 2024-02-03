@@ -29,7 +29,7 @@ function SidebarItem({
   onClick?: () => void;
 }) {
   return (
-    <li onClick={onClick}>
+    <li onClick={onClick} className="tooltip tooltip-right" data-tip={text}>
       <span className="p-2">{icon}</span>
     </li>
   );
