@@ -1,15 +1,37 @@
 import { useSidebar } from "@/hooks";
+import { Settings } from "lucide-react";
 
-export function Sidebar() {
+function Sidebar() {
 	const { sidebarIsOpen } = useSidebar();
 
 	return (
 		<>
-			{sidebarIsOpen && (
-				<div className="h-screen">
-					<ul className="menu p-4 min-h-full bg-base-200 text-base-content"></ul>
+			{sidebarIsOpen !== "closed" && (
+				<div className="h-screen bg-base-200 flex flex-col">
+					<div className="h-full" />
+					<ul className="menu text-base-content p-1">
+						<SidebarItem icon={<Settings size={16} />} text="Settings" />
+					</ul>
 				</div>
 			)}
 		</>
 	);
 }
+
+function SidebarItem({
+	icon,
+	text,
+	onClick,
+}: {
+	icon: React.ReactNode;
+	text: string;
+	onClick?: () => void;
+}) {
+	return (
+		<li onClick={onClick}>
+			<span className="p-2">{icon}</span>
+		</li>
+	);
+}
+
+export default Sidebar;

@@ -9,6 +9,8 @@ interface VaultContext {
 	openVaultFromPath: (path: string) => Promise<void>;
 	vaultConfig: VaultConfig;
 	setVaultConfig: (config: VaultConfig) => void;
+	openedPath: string | null;
+	openPath: (path: string) => void;
 }
 
 const VaultContext = createContext<VaultContext | null>(null);
@@ -16,6 +18,7 @@ const VaultContext = createContext<VaultContext | null>(null);
 const VaultProvider = ({ children }: { children: React.ReactNode }) => {
 	const [currentVaultPath, setCurrentVaultPath] = useState<string | null>(null);
 	const [vaultConfig, setVaultConfig] = useState<VaultConfig>({});
+	const [openedPath, openPath] = useState<string | null>(null);
 
 	const { openSidebar } = useSidebar();
 
@@ -37,8 +40,10 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
 			openVaultFromPath,
 			vaultConfig,
 			setVaultConfig,
+			openedPath,
+			openPath,
 		}),
-		[currentVaultPath, vaultConfig],
+		[currentVaultPath, vaultConfig, openedPath],
 	);
 
 	return (

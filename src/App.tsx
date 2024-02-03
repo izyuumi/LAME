@@ -1,8 +1,9 @@
 import "@/styles/main.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Sidebar } from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar";
 import { Onboard, Dashboard } from "@/pages";
+import Filetree from "@/components/Filetree";
 
 const router = createBrowserRouter([
 	{
@@ -23,6 +24,7 @@ function App() {
 	return (
 		<div className="flex">
 			<Sidebar />
+			<Filetree />
 			<RouterProvider router={router} />
 		</div>
 	);

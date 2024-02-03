@@ -1,28 +1,43 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 
+type SidebarState = "closed" | "opened" | "minimized";
+
 interface SidebarContext {
-	sidebarIsOpen: boolean;
+	sidebarIsOpen: SidebarState;
 	toggleSidebar: () => void;
 	openSidebar: () => void;
 	closeSidebar: () => void;
+	minimizeSidebar: () => void;
 }
 
 const SidebarContext = createContext<SidebarContext | null>(null);
 
 const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
-	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-	const toggleSidebar = () => setSidebarIsOpen((prev) => !prev);
-	const openSidebar = () => setSidebarIsOpen(true);
-	const closeSidebar = () => setSidebarIsOpen(false);
+	const [sidebarStatus, setSidebarStatus] = useState<SidebarState>("closed");
+	const toggleSidebar = () =>
+		setSidebarStatus((prev) => {
+			switch (prev) {
+				case "closed":
+					return "opened";
+				case "opened":
+					return "minimized";
+				case "minimized":
+					return "closed";
+			}
+		});
+	const openSidebar = () => setSidebarStatus("opened");
+	const closeSidebar = () => setSidebarStatus("closed");
+	const minimizeSidebar = () => setSidebarStatus("minimized");
 
 	const value = useMemo(
 		() => ({
-			sidebarIsOpen,
+			sidebarIsOpen: sidebarStatus,
 			toggleSidebar,
 			openSidebar,
 			closeSidebar,
+			minimizeSidebar,
 		}),
-		[sidebarIsOpen],
+		[sidebarStatus],
 	);
 
 	return (

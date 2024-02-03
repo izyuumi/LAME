@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
 	const navigate = useNavigate();
-	const { currentVaultPath } = useVault();
+	const { currentVaultPath, openedPath } = useVault();
 
 	useEffect(() => {
 		if (!currentVaultPath) {
@@ -14,9 +14,12 @@ export function Dashboard() {
 	}, [currentVaultPath]);
 
 	return (
-		<div>
-			<h1>Dashboard</h1>
-			<p>Current vault: {currentVaultPath}</p>
+		<div className="flex h-screen w-screen justify-center items-center">
+			{openedPath ? (
+				<div>Opened path: {openedPath}</div>
+			) : (
+				<div>No path opened</div>
+			)}
 		</div>
 	);
 }
