@@ -1,3 +1,4 @@
+import Editor from "@/components/editor";
 import { useVault } from "@/hooks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,9 +17,9 @@ export function Dashboard() {
 	return (
 		<div className="flex h-screen w-screen justify-center items-center">
 			{openedPath ? (
-				<div>Opened path: {openedPath}</div>
+				<Editor />
 			) : (
-				<div>No path opened</div>
+				<div className="text-3xl text-center">Open a file to start editing</div>
 			)}
 		</div>
 	);

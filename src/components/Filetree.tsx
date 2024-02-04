@@ -13,9 +13,6 @@ function Filetree() {
 	const getDirectoryContents = async (path: string | null) => {
 		if (!path) return;
 		const files = await readDir(path, { recursive: true });
-		for (const file of files) {
-			console.log(file);
-		}
 		setFiletree(files);
 	};
 
@@ -24,10 +21,14 @@ function Filetree() {
 	}, [currentVaultPath]);
 
 	return (
-		<ul ref={filetreeRef} className="flex flex-col w-[150px] p-1 bg-base-300">
+		<ul
+			ref={filetreeRef}
+			className="flex flex-col w-[150px] p-1 bg-base-300 select-none"
+		>
 			{filetree.map(
 				(file) =>
-					!file.name?.startsWith(".") && (
+					!file.name?.startsWith(".") &&
+					file.name !== "conf.lame" && (
 						<FiletreeItem key={file.path} {...file} />
 					),
 			)}
@@ -40,10 +41,10 @@ export default Filetree;
 const FiletreeItem = ({ name, path, children }: FileEntry) => {
 	const { openPath, openedPath } = useVault();
 	const [isOpen, setIsOpen] = useState(false);
-	const isDirectory = children && children.length > 0;
+	const isDirectory = children !== undefined;
 
 	return (
-		<li className="ml-1">
+		<li className="ml-2">
 			<button
 				onClick={() =>
 					isDirectory ? setIsOpen((prev) => !prev) : openPath(path)
@@ -51,13 +52,14 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
 				className={tm(
 					"flex items-center w-full",
 					openedPath === path && "text-[#0052ff]",
+					!isDirectory && "ml-3",
 				)}
 			>
 				{isDirectory &&
 					(isOpen ? (
-						<ChevronDown size={16} className="mr-1" />
+						<ChevronDown size={16} className="mr-1 opacity-40" />
 					) : (
-						<ChevronRight size={16} className="mr-1" />
+						<ChevronRight size={16} className="mr-1 opacity-40" />
 					))}
 				{name}
 			</button>
