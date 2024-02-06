@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Sidebar from "@/components/Sidebar";
 import { Onboard, Dashboard } from "@/pages";
 import Filetree from "@/components/Filetree";
+import Settings from "@/components/settings";
 
 const router = createBrowserRouter([
 	{
@@ -26,6 +27,7 @@ function App() {
 			<Sidebar />
 			<Filetree />
 			<RouterProvider router={router} />
+			<Settings />
 		</div>
 	);
 }
