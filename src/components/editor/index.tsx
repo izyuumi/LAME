@@ -5,6 +5,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { useEffect } from "react";
+import { invoke as TAURI_INVOKE } from "@tauri-apps/api";
 
 function Editor() {
 	const { openedPath } = useVault();
@@ -16,7 +17,11 @@ function Editor() {
 	const readFile = async () => {
 		if (!openedPath) return;
 		const fileContents = await readTextFile(openedPath, {});
-		editor?.commands.setContent(fileContents);
+		const parsedFile = (await TAURI_INVOKE("parse_text_to_markdown", {
+			fileString: fileContents,
+		})) as string;
+		editor?.commands.setContent(parsedFile);
+		console.log(parsedFile);
 	};
 
 	useEffect(() => {
