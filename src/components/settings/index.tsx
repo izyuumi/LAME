@@ -22,9 +22,11 @@ function Settings() {
       <div className="modal-box flex">
         <ul className="flex flex-col items-start">
           {Object.keys(settingsPages).map((page) => (
-            <li className="hover:bg-white hover:bg-opacity-10 w-full p-2 rounded-md">
+            <li
+              key={page}
+              className="hover:bg-white hover:bg-opacity-10 w-full p-2 rounded-md"
+            >
               <button
-                key={page}
                 onClick={() =>
                   setCurrentPage(page as keyof typeof settingsPages)
                 }
