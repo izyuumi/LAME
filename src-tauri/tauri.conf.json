@@ -58,7 +58,8 @@
         "fileDropEnabled": true,
         "decorations": true,
         "transparent": true,
-        "center": true
+        "center": true,
+        "titleBarStyle": "Overlay"
       }
     ]
   }
