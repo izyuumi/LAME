@@ -2020,6 +2020,12 @@ tailwindcss@^3.4.1:
     resolve "^1.22.2"
     sucrase "^3.32.0"
 
+"tauri-plugin-fs-watch-api@https://github.com/tauri-apps/tauri-plugin-fs-watch#v1":
+  version "0.0.0"
+  resolved "https://github.com/tauri-apps/tauri-plugin-fs-watch#f74123edf269381171c5ef40a9599c3e87bb096a"
+  dependencies:
+    "@tauri-apps/api" "1.5.3"
+
 "tauri-plugin-store-api@https://github.com/tauri-apps/tauri-plugin-store#v1":
   version "0.0.0"
   resolved "https://github.com/tauri-apps/tauri-plugin-store#7d2632996f290b0f18cc5f8a2b2791046400690e"
