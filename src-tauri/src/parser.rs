@@ -1,5 +1,5 @@
 #[tauri::command]
-pub fn parse_text_to_markdown(file_string: String) -> String {
+pub fn parse_text_to_html_as_markdown(file_string: String) -> String {
     let mut result = String::new();
     let mut in_code_block = false;
     for line in file_string.lines() {

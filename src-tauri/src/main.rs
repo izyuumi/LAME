@@ -3,13 +3,13 @@
 
 mod parser;
 
-use parser::parse_text_to_markdown;
+use parser::*;
 
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_fs_watch::init())
-        .invoke_handler(tauri::generate_handler![parse_text_to_markdown])
+        .invoke_handler(tauri::generate_handler![parse_text_to_html_as_markdown])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

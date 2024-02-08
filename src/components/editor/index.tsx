@@ -20,9 +20,12 @@ function Editor() {
   const readFile = async () => {
     if (!openedPath) return;
     const fileContents = await readTextFile(openedPath);
-    const parsedFile = (await TAURI_INVOKE("parse_text_to_markdown", {
-      fileString: fileContents,
-    })) as string;
+    const parsedFile = await TAURI_INVOKE<string>(
+      "parse_text_to_html_as_markdown",
+      {
+        fileString: fileContents,
+      },
+    );
     editor!.commands.setContent(parsedFile);
     console.log(parsedFile);
   };
