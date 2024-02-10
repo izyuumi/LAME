@@ -25,13 +25,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="flex">
-      <div>
-        <div className="flex">
-          <Sidebar />
-          <Filetree />
-        </div>
+      <div className="flex">
+        <Sidebar />
+        <Filetree />
       </div>
-      <div>
+      <div className="w-full">
         <TitlebarSpace />
         <RouterProvider router={router} />
       </div>

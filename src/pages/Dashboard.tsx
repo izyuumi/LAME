@@ -15,7 +15,7 @@ export function Dashboard() {
   }, [currentVaultPath]);
 
   return (
-    <div className="flex h-screen w-screen justify-center items-center">
+    <div className="flex h-full w-full justify-center items-center">
       <Editor />
       {!openedPath && (
         <div className="text-3xl text-center">Open a file to start editing</div>
