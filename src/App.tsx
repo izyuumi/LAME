@@ -5,7 +5,6 @@ import Sidebar from "@/components/Sidebar";
 import { Onboard, Dashboard } from "@/pages";
 import Filetree from "@/components/Filetree";
 import Settings from "@/components/settings";
-import TitlebarSpace from "./components/TaskbarSpace";
 
 const router = createBrowserRouter([
   {
@@ -29,10 +28,7 @@ function App() {
         <Sidebar />
         <Filetree />
       </div>
-      <div className="w-full">
-        <TitlebarSpace />
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
       <Settings />
     </div>
   );
