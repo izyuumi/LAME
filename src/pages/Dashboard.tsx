@@ -2,7 +2,7 @@ import "@/components/editor/tiptap.scss";
 
 import TitlebarSpace from "@/components/TaskbarSpace";
 import { useVault } from "@/hooks";
-import { readTextFile } from "@tauri-apps/api/fs";
+import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -19,12 +19,12 @@ export function Dashboard() {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     onUpdate: async ({ editor }) => {
-      console.log(
-        await TAURI_INVOKE("parse_html_as_markdown", {
-          htmlString: editor.getHTML(),
-        }),
-      );
-      console.log(editor.getHTML());
+      const md = await TAURI_INVOKE<string>("parse_html_as_markdown", {
+        htmlString: editor.getHTML(),
+      });
+      if (openedPath) {
+        await writeTextFile(openedPath, md);
+      }
     },
   });
 
