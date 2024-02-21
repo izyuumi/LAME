@@ -18,8 +18,13 @@ export function Dashboard() {
 
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    onUpdate: ({ editor }) => {
-      console.log(editor.getJSON());
+    onUpdate: async ({ editor }) => {
+      console.log(
+        await TAURI_INVOKE("parse_html_as_markdown", {
+          htmlString: editor.getHTML(),
+        }),
+      );
+      console.log(editor.getHTML());
     },
   });
 
