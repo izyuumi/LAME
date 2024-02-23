@@ -19,6 +19,7 @@ interface VaultContext {
   setVaultConfig: (config: VaultConfig) => void;
   openedPath: string | null;
   openPath: (path: string) => void;
+  closeVault: () => void;
 }
 
 const VaultContext = createContext<VaultContext | null>(null);
@@ -63,6 +64,10 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const closeVault = () => {
+    setCurrentVaultPath(null);
+  };
+
   useEffect(() => {
     openLastOpenedVault();
   }, []);
@@ -75,6 +80,7 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
       setVaultConfig,
       openedPath,
       openPath,
+      closeVault,
     }),
     [currentVaultPath, vaultConfig, openedPath],
   );

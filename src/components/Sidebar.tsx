@@ -2,10 +2,14 @@ import { useSidebar } from "@/hooks";
 import { useSettings } from "@/hooks/useSettings";
 import { Settings, Vault } from "lucide-react";
 import TitlebarSpace from "@/components/TaskbarSpace";
+import { useRef } from "react";
+import VaultPrompt from "./VaultPrompt";
 
 function Sidebar() {
   const { sidebarIsOpen } = useSidebar();
   const { openSettings } = useSettings();
+
+  const vaultPromptRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
@@ -14,7 +18,13 @@ function Sidebar() {
           <TitlebarSpace />
           <div className="flex-1" />
           <ul className="menu text-base-content p-1">
-            <SidebarItem icon={<Vault size={16} />} text="Vault" />
+            <SidebarItem
+              icon={<Vault size={16} />}
+              text="Vault"
+              onClick={() => {
+                vaultPromptRef.current?.showModal();
+              }}
+            />
             <SidebarItem
               icon={<Settings size={16} />}
               text="Settings"
@@ -23,6 +33,7 @@ function Sidebar() {
           </ul>
         </div>
       )}
+      <VaultPrompt dialogRef={vaultPromptRef} />
     </>
   );
 }
