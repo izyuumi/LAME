@@ -8,14 +8,7 @@ function TitlebarSpace({
   children?: React.ReactNode;
 }) {
   return (
-    <div
-      data-tauri-drag-region
-      className={tm(
-        "h-8 w-full",
-
-        className,
-      )}
-    >
+    <div data-tauri-drag-region className={tm("h-8 w-full", className)}>
       {children}
     </div>
   );
