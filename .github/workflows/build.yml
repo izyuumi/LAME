@@ -1,8 +1,8 @@
 name: "publish"
-
 on:
-  release:
-    types: created
+  push:
+    tags:
+      - "*"
 
 jobs:
   publish-tauri:
@@ -48,7 +48,6 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
           tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          args: "--verbose"
           releaseName: "App v__VERSION__"
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
