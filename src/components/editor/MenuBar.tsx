@@ -17,7 +17,11 @@ import { twMerge as tm } from "tailwind-merge";
 import { Level } from "@tiptap/extension-heading";
 
 const buttonClass = (active?: boolean) =>
-  tm("hover:bg-primary p-1 rounded-md", active && "bg-base-300");
+  tm(
+    "hover:bg-primary p-1 rounded-md",
+    active && "bg-base-300",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+  );
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
   const styles: {
@@ -60,6 +64,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
           key={style.id}
           className={buttonClass(style.active)}
           onClick={style.onClick}
+          disabled={!editor.isFocused}
         >
           {style.label}
         </button>
@@ -101,7 +106,11 @@ const HeaderDropdown = ({
 
   return (
     <>
-      <button className={className} onClick={() => setIsOpen((prev) => !prev)}>
+      <button
+        className={className}
+        onClick={() => setIsOpen((prev) => !prev)}
+        disabled={!editor.isFocused}
+      >
         <DropdownButton />
       </button>
       <div
