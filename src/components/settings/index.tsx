@@ -1,4 +1,4 @@
-import { useSettings } from "@/hooks/useSettings";
+import { useSettings } from "@/hooks";
 import SettingsShortcuts from "./SettingsShortcuts";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ function Settings() {
           {Object.keys(settingsPages).map((page) => (
             <li
               key={page}
-              className="hover:bg-white hover:bg-opacity-10 w-full p-2 rounded-md"
+              className="w-full rounded-md p-2 hover:bg-white hover:bg-opacity-10"
             >
               <button
                 onClick={() =>

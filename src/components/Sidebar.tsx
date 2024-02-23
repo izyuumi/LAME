@@ -1,5 +1,4 @@
-import { useSidebar } from "@/hooks";
-import { useSettings } from "@/hooks/useSettings";
+import { useSidebar, useSettings } from "@/hooks";
 import { Settings, Vault } from "lucide-react";
 import TitlebarSpace from "@/components/TaskbarSpace";
 import { useRef } from "react";
