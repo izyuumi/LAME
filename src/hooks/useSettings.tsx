@@ -16,7 +16,13 @@ const SettingsContext = createContext<SettingsContext | null>(null);
 
 const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const settingsRef = useRef<HTMLDialogElement>(null);
-  const open = () => settingsRef.current?.showModal();
+  const open = () => {
+    settingsRef.current?.showModal();
+    let firstFocusable = settingsRef.current?.querySelector(
+      "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+    ) as HTMLElement;
+    firstFocusable?.blur();
+  };
   const close = () => settingsRef.current?.close();
 
   const value = useMemo(

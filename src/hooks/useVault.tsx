@@ -64,6 +64,9 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  /**
+   * Closes the current vault and sets the current vault path to null
+   */
   const closeVault = () => {
     setCurrentVaultPath(null);
   };

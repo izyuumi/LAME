@@ -22,6 +22,10 @@ function Sidebar() {
               text="Vault"
               onClick={() => {
                 vaultPromptRef.current?.showModal();
+                let firstFocusable = vaultPromptRef.current?.querySelector(
+                  "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+                ) as HTMLElement;
+                firstFocusable?.blur();
               }}
             />
             <SidebarItem
