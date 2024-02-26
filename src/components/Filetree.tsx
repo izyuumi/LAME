@@ -20,13 +20,27 @@ function Filetree() {
       },
       {
         recursive: true,
-      }
+      },
     );
   };
 
   const getDirectoryContents = async (path: string | null) => {
     if (!path) return;
     const files = await readDir(path, { recursive: true });
+    files.sort((a, b) => {
+      if (a.children && b.children) {
+        if (a.name === b.name) return 0;
+        if (!a.name) return -1;
+        if (!b.name) return 1;
+        return a.name.localeCompare(b.name);
+      }
+      if (a.children && !b.children) return -1;
+      if (!a.children && b.children) return 1;
+      if (a.name === b.name) return 0;
+      if (!a.name) return -1;
+      if (!b.name) return 1;
+      return a.name.localeCompare(b.name);
+    });
     setFiletree(files);
   };
 
@@ -43,8 +57,8 @@ function Filetree() {
       <ul
         ref={filetreeRef}
         className={tm(
-          "flex flex-col w-[150px] p-1 bg-base-300 select-none",
-          !currentVaultPath && "hidden"
+          "bg-base-300 flex w-[150px] select-none flex-col p-1",
+          !currentVaultPath && "hidden",
         )}
       >
         {filetree.map(
@@ -52,7 +66,7 @@ function Filetree() {
             !file.name?.startsWith(".") &&
             file.name !== "conf.lame" && (
               <FiletreeItem key={file.path} {...file} />
-            )
+            ),
         )}
       </ul>
     </div>
@@ -73,9 +87,9 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
           isDirectory ? setIsOpen((prev) => !prev) : openPath(path)
         }
         className={tm(
-          "flex items-center w-full",
+          "flex w-full items-center",
           openedPath === path && "text-[#0052ff]",
-          !isDirectory && "ml-3"
+          !isDirectory && "ml-3",
         )}
       >
         {isDirectory &&
@@ -94,7 +108,7 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
                 <span key={child.path} className={isOpen ? "" : "hidden"}>
                   <FiletreeItem {...child} />
                 </span>
-              )
+              ),
           )}
         </ul>
       )}
