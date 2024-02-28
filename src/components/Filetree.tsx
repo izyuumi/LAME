@@ -1,10 +1,14 @@
 import { useVault } from "@/hooks";
 import { type FileEntry, readDir } from "@tauri-apps/api/fs";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
 import { watch } from "tauri-plugin-fs-watch-api";
 import TitlebarSpace from "@/components/TaskbarSpace";
+import {
+  ContextMenuWrapper,
+  ContextMenuItem,
+} from "./Common/ContextMenuWrapper";
 
 function Filetree() {
   const { currentVaultPath } = useVault();
@@ -80,38 +84,106 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDirectory = children !== undefined;
 
-  return (
-    <li className="ml-2">
-      <button
-        onClick={() =>
-          isDirectory ? setIsOpen((prev) => !prev) : openPath(path)
-        }
-        className={tm(
-          "flex w-full items-center",
-          openedPath === path && "text-[#0052ff]",
-          !isDirectory && "ml-3",
-        )}
+  const [itemContextMenuPosition, setItemContextMenuPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [showItemContextMenu, setShowItemContextMenu] = useState(false);
+  const [directoryContextMenuPosition, setDirectoryContextMenuPosition] =
+    useState({
+      x: 0,
+      y: 0,
+    });
+  const [showDirectoryContextMenu, setShowDirectoryContextMenu] =
+    useState(false);
+
+  const directoryContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setDirectoryContextMenuPosition({ x: event.clientX, y: event.clientY });
+    setShowDirectoryContextMenu(true);
+  };
+
+  const fileContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setItemContextMenuPosition({ x: event.clientX, y: event.clientY });
+    setShowItemContextMenu(true);
+  };
+
+  const FiletreeDirectoryContextMenu = () => {
+    return (
+      <ContextMenuWrapper
+        position={directoryContextMenuPosition}
+        show={showDirectoryContextMenu}
+        setShow={setShowDirectoryContextMenu}
       >
-        {isDirectory &&
-          (isOpen ? (
-            <ChevronDown size={16} className="mr-1 opacity-40" />
-          ) : (
-            <ChevronRight size={16} className="mr-1 opacity-40" />
-          ))}
-        {name}
-      </button>
-      {isDirectory && (
-        <ul>
-          {children.map(
-            (child) =>
-              !child.name?.startsWith(".") && (
-                <span key={child.path} className={isOpen ? "" : "hidden"}>
-                  <FiletreeItem {...child} />
-                </span>
-              ),
+        <ContextMenuItem onClick={() => console.log("New File")}>
+          New File
+        </ContextMenuItem>
+        <ContextMenuItem onClick={() => console.log("New Folder")}>
+          New Folder
+        </ContextMenuItem>
+      </ContextMenuWrapper>
+    );
+  };
+
+  const FiletreeItemContextMenu = () => {
+    return (
+      <ContextMenuWrapper
+        position={itemContextMenuPosition}
+        show={showItemContextMenu}
+        setShow={setShowItemContextMenu}
+      >
+        <ContextMenuItem onClick={() => console.log("Open")}>
+          Open
+        </ContextMenuItem>
+        <ContextMenuItem onClick={() => console.log("Rename")}>
+          Rename
+        </ContextMenuItem>
+        <ContextMenuItem onClick={() => console.log("Delete")}>
+          Delete
+        </ContextMenuItem>
+      </ContextMenuWrapper>
+    );
+  };
+
+  return (
+    <>
+      <li className="ml-2">
+        <button
+          onClick={() =>
+            isDirectory ? setIsOpen((prev) => !prev) : openPath(path)
+          }
+          onContextMenu={isDirectory ? directoryContextMenu : fileContextMenu}
+          className={tm(
+            "flex w-full items-center",
+            openedPath === path && "text-[#0052ff]",
+            !isDirectory && "ml-3",
           )}
-        </ul>
-      )}
-    </li>
+        >
+          {isDirectory &&
+            (isOpen ? (
+              <ChevronDown size={16} className="mr-1 opacity-40" />
+            ) : (
+              <ChevronRight size={16} className="mr-1 opacity-40" />
+            ))}
+          {name}
+        </button>
+        {isDirectory && (
+          <ul>
+            {children.map(
+              (child) =>
+                !child.name?.startsWith(".") && (
+                  <span key={child.path} className={isOpen ? "" : "hidden"}>
+                    <FiletreeItem {...child} />
+                  </span>
+                ),
+            )}
+          </ul>
+        )}
+      </li>
+      {isDirectory
+        ? showDirectoryContextMenu && <FiletreeDirectoryContextMenu />
+        : showItemContextMenu && <FiletreeItemContextMenu />}
+    </>
   );
 };
