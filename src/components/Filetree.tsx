@@ -1,5 +1,10 @@
 import { ContextMenuItem, useVault } from "@/hooks";
-import { type FileEntry, readDir } from "@tauri-apps/api/fs";
+import {
+  type FileEntry,
+  readDir,
+  writeTextFile,
+  exists,
+} from "@tauri-apps/api/fs";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
@@ -12,6 +17,7 @@ function Filetree() {
 
   const [filetree, setFiletree] = useState<FileEntry[]>([]);
   const filetreeRef = useRef<HTMLUListElement>(null);
+  const [filetreeIsChanged, setFiletreeIsChanged] = useState(false);
 
   const watchForFileChanges = async (path: string) => {
     await watch(
@@ -52,6 +58,13 @@ function Filetree() {
     }
   }, [currentVaultPath]);
 
+  useEffect(() => {
+    if (filetreeIsChanged) {
+      getDirectoryContents(currentVaultPath);
+      setFiletreeIsChanged(false);
+    }
+  }, [filetreeIsChanged]);
+
   return (
     <div className="bg-base-300 h-screen">
       <TitlebarSpace />
@@ -66,7 +79,11 @@ function Filetree() {
           (file) =>
             !file.name?.startsWith(".") &&
             file.name !== "conf.lame" && (
-              <FiletreeItem key={file.path} {...file} />
+              <FiletreeItem
+                key={file.path}
+                {...file}
+                updateFiletree={() => setFiletreeIsChanged(true)}
+              />
             ),
         )}
       </ul>
@@ -76,20 +93,60 @@ function Filetree() {
 
 export default Filetree;
 
-const FiletreeItem = ({ name, path, children }: FileEntry) => {
+type FiletreeItemProps = FileEntry & {
+  updateFiletree: () => void;
+};
+
+const FiletreeItem = ({
+  name,
+  path,
+  children,
+  updateFiletree,
+}: FiletreeItemProps) => {
   const { openPath, openedPath } = useVault();
   const [isOpen, setIsOpen] = useState(false);
   const isDirectory = children !== undefined;
   const itemRef = useRef<HTMLLIElement>(null);
 
-  const { openContextMenu } = useContextMenu();
+  const { openContextMenu, closeContextMenu } = useContextMenu();
+
+  const showNewFileInputLiRef = useRef<HTMLLIElement>(null);
+  const [showNewFileInput, setShowNewFileInput] = useState(false);
+  const [newFileName, setNewFileName] = useState("");
+  const makeNewFile = async () => {
+    closeContextMenu();
+    setShowNewFileInput(true);
+    setIsOpen(true);
+    setTimeout(() => {
+      const input = showNewFileInputLiRef.current?.querySelector("input");
+      if (!input) return;
+      input.focus();
+      input.addEventListener("blur", async () => {
+        setNewFileName("");
+        setShowNewFileInput(false);
+      });
+      input.addEventListener("keydown", async (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const newFileName = input.value;
+          const newFilePath = `${path}/${newFileName}`;
+          const fileAlreadyExists = await exists(newFilePath);
+          if (!fileAlreadyExists) {
+            await writeTextFile(newFilePath, "");
+            updateFiletree();
+          }
+          openPath(newFilePath);
+          setNewFileName("");
+          setShowNewFileInput(false);
+        }
+      });
+    }, 50);
+  };
 
   const FiletreeDirectoryContextMenu = () => {
     return (
       <>
-        <ContextMenuItem onClick={() => console.log("New File")}>
-          New File
-        </ContextMenuItem>
+        <ContextMenuItem onClick={makeNewFile}>New File</ContextMenuItem>
         <ContextMenuItem onClick={() => console.log("New Folder")}>
           New Folder
         </ContextMenuItem>
@@ -147,11 +204,21 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
         </button>
         {isDirectory && (
           <ul>
+            {showNewFileInput && (
+              <li ref={showNewFileInputLiRef} className="ml-3">
+                <input
+                  className="w-full"
+                  type="text"
+                  value={newFileName}
+                  onChange={(e) => setNewFileName(e.target.value)}
+                />
+              </li>
+            )}
             {children.map(
               (child) =>
                 !child.name?.startsWith(".") && (
                   <span key={child.path} className={isOpen ? "" : "hidden"}>
-                    <FiletreeItem {...child} />
+                    <FiletreeItem {...child} updateFiletree={updateFiletree} />
                   </span>
                 ),
             )}

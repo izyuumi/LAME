@@ -20,7 +20,7 @@ interface ContextMenuProps {
     contextChildren: React.ReactNode,
     options?: ContextMenuOptions,
   ) => void;
-  close: () => void;
+  closeContextMenu: () => void;
   contextMenuAnchorEl: HTMLElement | null;
   contextMenuChildren: React.ReactNode;
   contextMenuOptions: ContextMenuOptions;
@@ -51,7 +51,7 @@ const ContextMenuProvider = ({ children }: { children: React.ReactNode }) => {
     setContextMenuOptions(contextMenuOptions || {});
   };
 
-  const close = () => {
+  const closeContextMenu = () => {
     setContextMenuIsOpen(false);
     setContextMenuChildren(undefined);
     setContextMenuAnchorEl(null);
@@ -62,7 +62,7 @@ const ContextMenuProvider = ({ children }: { children: React.ReactNode }) => {
     () => ({
       contextMenuIsOpen,
       openContextMenu,
-      close,
+      closeContextMenu,
       contextMenuAnchorEl,
       contextMenuChildren,
       contextMenuOptions,
@@ -96,7 +96,7 @@ export { useContextMenu, ContextMenuProvider, ContextMenuItem };
 const ContextMenuWrapper = () => {
   const {
     contextMenuIsOpen,
-    close,
+    closeContextMenu: close,
     contextMenuAnchorEl,
     contextMenuChildren,
     contextMenuOptions,
