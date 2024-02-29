@@ -1,14 +1,11 @@
-import { useVault } from "@/hooks";
+import { ContextMenuItem, useVault } from "@/hooks";
 import { type FileEntry, readDir } from "@tauri-apps/api/fs";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
 import { watch } from "tauri-plugin-fs-watch-api";
 import TitlebarSpace from "@/components/TaskbarSpace";
-import {
-  ContextMenuWrapper,
-  ContextMenuItem,
-} from "./Common/ContextMenuWrapper";
+import { useContextMenu } from "@/hooks";
 
 function Filetree() {
   const { currentVaultPath } = useVault();
@@ -83,56 +80,31 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
   const { openPath, openedPath } = useVault();
   const [isOpen, setIsOpen] = useState(false);
   const isDirectory = children !== undefined;
+  const itemRef = useRef<HTMLLIElement>(null);
 
-  const [itemContextMenuPosition, setItemContextMenuPosition] = useState({
-    x: 0,
-    y: 0,
-  });
-  const [showItemContextMenu, setShowItemContextMenu] = useState(false);
-  const [directoryContextMenuPosition, setDirectoryContextMenuPosition] =
-    useState({
-      x: 0,
-      y: 0,
-    });
-  const [showDirectoryContextMenu, setShowDirectoryContextMenu] =
-    useState(false);
-
-  const directoryContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setDirectoryContextMenuPosition({ x: event.clientX, y: event.clientY });
-    setShowDirectoryContextMenu(true);
-  };
-
-  const fileContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setItemContextMenuPosition({ x: event.clientX, y: event.clientY });
-    setShowItemContextMenu(true);
-  };
+  const { openContextMenu } = useContextMenu();
 
   const FiletreeDirectoryContextMenu = () => {
     return (
-      <ContextMenuWrapper
-        position={directoryContextMenuPosition}
-        show={showDirectoryContextMenu}
-        setShow={setShowDirectoryContextMenu}
-      >
+      <>
         <ContextMenuItem onClick={() => console.log("New File")}>
           New File
         </ContextMenuItem>
         <ContextMenuItem onClick={() => console.log("New Folder")}>
           New Folder
         </ContextMenuItem>
-      </ContextMenuWrapper>
+      </>
     );
+  };
+
+  const directoryContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    openContextMenu(event, itemRef.current, <FiletreeDirectoryContextMenu />);
   };
 
   const FiletreeItemContextMenu = () => {
     return (
-      <ContextMenuWrapper
-        position={itemContextMenuPosition}
-        show={showItemContextMenu}
-        setShow={setShowItemContextMenu}
-      >
+      <>
         <ContextMenuItem onClick={() => console.log("Open")}>
           Open
         </ContextMenuItem>
@@ -142,13 +114,18 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
         <ContextMenuItem onClick={() => console.log("Delete")}>
           Delete
         </ContextMenuItem>
-      </ContextMenuWrapper>
+      </>
     );
+  };
+
+  const fileContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    openContextMenu(event, itemRef.current, <FiletreeItemContextMenu />);
   };
 
   return (
     <>
-      <li className="ml-2">
+      <li className="ml-2" ref={itemRef}>
         <button
           onClick={() =>
             isDirectory ? setIsOpen((prev) => !prev) : openPath(path)
@@ -181,9 +158,6 @@ const FiletreeItem = ({ name, path, children }: FileEntry) => {
           </ul>
         )}
       </li>
-      {isDirectory
-        ? showDirectoryContextMenu && <FiletreeDirectoryContextMenu />
-        : showItemContextMenu && <FiletreeItemContextMenu />}
     </>
   );
 };
