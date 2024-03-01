@@ -4,6 +4,7 @@ import {
   readDir,
   writeTextFile,
   exists,
+  createDir,
 } from "@tauri-apps/api/fs";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
@@ -113,7 +114,7 @@ const FiletreeItem = ({
   const showNewFileInputLiRef = useRef<HTMLLIElement>(null);
   const [showNewFileInput, setShowNewFileInput] = useState(false);
   const [newFileName, setNewFileName] = useState("");
-  const makeNewFile = async () => {
+  const makeNewFileOrFolder = async (fileOrFolder: "file" | "folder") => {
     closeContextMenu();
     setShowNewFileInput(true);
     setIsOpen(true);
@@ -132,10 +133,23 @@ const FiletreeItem = ({
           const newFilePath = `${path}/${newFileName}`;
           const fileAlreadyExists = await exists(newFilePath);
           if (!fileAlreadyExists) {
-            await writeTextFile(newFilePath, "");
+            switch (fileOrFolder) {
+              case "file":
+                await writeTextFile(newFilePath, "");
+                break;
+              case "folder":
+                if (newFileName.endsWith("/")) {
+                  await createDir(newFilePath);
+                  break;
+                }
+                await createDir(`${newFilePath}/`);
+                break;
+            }
             updateFiletree();
           }
-          openPath(newFilePath);
+          if (fileOrFolder === "file") {
+            openPath(newFilePath);
+          }
           setNewFileName("");
           setShowNewFileInput(false);
         }
@@ -146,8 +160,10 @@ const FiletreeItem = ({
   const FiletreeDirectoryContextMenu = () => {
     return (
       <>
-        <ContextMenuItem onClick={makeNewFile}>New File</ContextMenuItem>
-        <ContextMenuItem onClick={() => console.log("New Folder")}>
+        <ContextMenuItem onClick={() => makeNewFileOrFolder("file")}>
+          New File
+        </ContextMenuItem>
+        <ContextMenuItem onClick={() => makeNewFileOrFolder("folder")}>
           New Folder
         </ContextMenuItem>
       </>
