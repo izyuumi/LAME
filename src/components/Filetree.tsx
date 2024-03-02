@@ -32,10 +32,8 @@ function Filetree() {
     );
   };
 
-  const getDirectoryContents = async (path: string | null) => {
-    if (!path) return;
-    const files = await readDir(path, { recursive: true });
-    files.sort((a, b) => {
+  const sortRecursively = (filetree: FileEntry[]) => {
+    filetree.sort((a, b) => {
       if (a.children && b.children) {
         if (a.name === b.name) return 0;
         if (!a.name) return -1;
@@ -49,6 +47,17 @@ function Filetree() {
       if (!b.name) return 1;
       return a.name.localeCompare(b.name);
     });
+    filetree.forEach((file) => {
+      if (file.children) {
+        sortRecursively(file.children);
+      }
+    });
+  };
+
+  const getDirectoryContents = async (path: string | null) => {
+    if (!path) return;
+    const files = await readDir(path, { recursive: true });
+    sortRecursively(files);
     setFiletree(files);
   };
 
