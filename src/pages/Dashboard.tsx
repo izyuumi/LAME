@@ -6,7 +6,7 @@ import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { invoke as TAURI_INVOKE } from "@tauri-apps/api";
 import { twMerge as tm } from "tailwind-merge";
@@ -16,19 +16,14 @@ export function Dashboard() {
   const navigate = useNavigate();
   const { currentVaultPath, openedPath } = useVault();
 
-  const [lastSaved, setLastSaved] = useState<Date>();
-
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     onUpdate: async ({ editor }) => {
-      if (lastSaved && new Date().getTime() - lastSaved.getTime() < 5000)
-        return;
       const md = await TAURI_INVOKE<string>("parse_html_as_markdown", {
         htmlString: editor.getHTML(),
       });
       if (openedPath) {
         await writeTextFile(openedPath, md);
-        setLastSaved(new Date());
       }
     },
   });
