@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { useSidebar, useVault } from "@/hooks";
+import { useFiletree, useVault } from "@/hooks";
 import { open } from "@tauri-apps/api/dialog";
 import { appWindow } from "@tauri-apps/api/window";
 import { useNavigate } from "react-router-dom";
 
 export function Onboard() {
-  const { closeSidebar } = useSidebar();
+  const { closeFiletree } = useFiletree();
   const { openVaultFromPath, currentVaultPath } = useVault();
   const navigate = useNavigate();
 
   useEffect(() => {
-    closeSidebar();
+    closeFiletree();
   }, []);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export function Onboard() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center gap-2">
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
       <h1>Welcome to the LAME</h1>
       <p>
         <strong>L</strong>OL <strong>A</strong>nother <strong>M</strong>
@@ -57,7 +57,7 @@ export function Onboard() {
       </p>
       <p>Drag and drop a directory to get started</p>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         onClick={selectVault}
       >
         Select directory

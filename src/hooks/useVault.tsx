@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { useSidebar } from ".";
+import { useFiletree } from "@/hooks";
 import { Store } from "tauri-plugin-store-api";
 import { z } from "zod";
 
@@ -35,7 +35,7 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
   const [vaultConfig, setVaultConfig] = useState<VaultConfig>({});
   const [openedPath, openPath] = useState<string | null>(null);
 
-  const { openSidebar } = useSidebar();
+  const { openFiletree } = useFiletree();
 
   /**
    * Opens a vault from a given path
@@ -47,7 +47,7 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
     await checkConfigFile(path);
     setCurrentVaultPath(path);
     await store.set("last_opened_vault", LastOpenedVaultSchema.parse({ path }));
-    openSidebar();
+    openFiletree();
   };
 
   /**

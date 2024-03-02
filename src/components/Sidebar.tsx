@@ -1,41 +1,38 @@
-import { useSidebar, useSettings } from "@/hooks";
+import { useSettings } from "@/hooks";
 import { Settings, Vault } from "lucide-react";
 import TitlebarSpace from "@/components/TaskbarSpace";
 import { useRef } from "react";
 import VaultPrompt from "./VaultPrompt";
 
 function Sidebar() {
-  const { sidebarIsOpen } = useSidebar();
   const { openSettings } = useSettings();
 
   const vaultPromptRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
-      {sidebarIsOpen !== "closed" && (
-        <div className="bg-base-200 flex flex-col">
-          <TitlebarSpace />
-          <div className="flex-1" />
-          <ul className="menu text-base-content p-1">
-            <SidebarItem
-              icon={<Vault size={16} />}
-              text="Vault"
-              onClick={() => {
-                vaultPromptRef.current?.showModal();
-                let firstFocusable = vaultPromptRef.current?.querySelector(
-                  "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
-                ) as HTMLElement;
-                firstFocusable?.blur();
-              }}
-            />
-            <SidebarItem
-              icon={<Settings size={16} />}
-              text="Settings"
-              onClick={openSettings}
-            />
-          </ul>
-        </div>
-      )}
+      <div className="bg-base-200 flex flex-col">
+        <TitlebarSpace />
+        <div className="flex-1" />
+        <ul className="menu text-base-content p-1">
+          <SidebarItem
+            icon={<Vault size={16} />}
+            text="Vault"
+            onClick={() => {
+              vaultPromptRef.current?.showModal();
+              let firstFocusable = vaultPromptRef.current?.querySelector(
+                "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+              ) as HTMLElement;
+              firstFocusable?.blur();
+            }}
+          />
+          <SidebarItem
+            icon={<Settings size={16} />}
+            text="Settings"
+            onClick={openSettings}
+          />
+        </ul>
+      </div>
       <VaultPrompt dialogRef={vaultPromptRef} />
     </>
   );

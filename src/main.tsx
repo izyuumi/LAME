@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "@/App";
 import "@/styles/main.css";
 import {
-  SidebarProvider,
+  FiletreeProvider,
   VaultProvider,
   SettingsProvider,
   ContextMenuProvider,
@@ -11,7 +11,7 @@ import {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <SidebarProvider>
+    <FiletreeProvider>
       <SettingsProvider>
         <VaultProvider>
           <ContextMenuProvider>
@@ -19,6 +19,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           </ContextMenuProvider>
         </VaultProvider>
       </SettingsProvider>
-    </SidebarProvider>
+    </FiletreeProvider>
   </React.StrictMode>,
 );
