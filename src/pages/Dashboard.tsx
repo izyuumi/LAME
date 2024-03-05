@@ -56,16 +56,18 @@ export function Dashboard() {
         </h1>
         <div>{editor && <MenuBar editor={editor} />}</div>
       </TitlebarSpace>
-      {openedPath ? (
-        <EditorContent
-          editor={editor}
-          className={tm("h-full w-full p-4", !openedPath && "hidden")}
-        />
-      ) : (
-        <div className="flex h-full items-center justify-center text-center text-3xl">
-          <h2>Open a file to start editing</h2>
-        </div>
-      )}
+      <div className="mb-4 h-full w-full overflow-auto">
+        {openedPath ? (
+          <EditorContent
+            editor={editor}
+            className={tm("h-full w-full p-4", !openedPath && "hidden")}
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-center text-3xl">
+            <h2>Open a file to start editing</h2>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
