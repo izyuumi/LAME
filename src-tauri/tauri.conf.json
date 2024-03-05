@@ -10,6 +10,14 @@
     "version": "0.0.1"
   },
   "tauri": {
+    "updater": {
+      "active": true,
+      "dialog": true,
+      "endpoints": [
+        "https://github.com/izyumidev/LAME/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDQ1RkUxQjAyRkM5RUQzQTkKUldTcDA1NzhBaHYrUmRmYnVQNmd1d2IrcGk2c3JSd2hxWHFwYkRlSWVuYnhvN29Wb2Ftek5CZW8K%"
+    },
     "macOSPrivateApi": true,
     "allowlist": {
       "all": false,
