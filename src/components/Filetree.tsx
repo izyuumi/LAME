@@ -6,13 +6,7 @@ import {
   exists,
   createDir,
 } from "@tauri-apps/api/fs";
-import {
-  ChevronDown,
-  ChevronRight,
-  File,
-  FilePlus,
-  FolderPlus,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, FilePlus, FolderPlus } from "lucide-react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
 import { watch } from "tauri-plugin-fs-watch-api";
@@ -89,7 +83,7 @@ function Filetree() {
   return (
     <div className="bg-base-300 h-screen">
       <TitlebarSpace />
-      <div className="w-full flex justify-center gap-2">
+      <div className="flex w-full justify-center gap-2">
         <div className="tooltip tooltip-bottom" data-tip="New File">
           <button onClick={() => initMakeNewFileOrFolder("file")}>
             <FilePlus size={20} />
@@ -114,7 +108,7 @@ function Filetree() {
                 {...file}
                 updateFiletree={() => setFiletreeIsChanged(true)}
               />
-            )
+            ),
         )}
         {showFileInput && (
           <FiletreeInput
@@ -126,7 +120,7 @@ function Filetree() {
                 currentVaultPath,
                 fileOrFolder,
                 () => getDirectoryContents(currentVaultPath),
-                openPath
+                openPath,
               )
             }
           />
@@ -206,7 +200,7 @@ const FiletreeItem = ({
         className={tm(
           "flex w-full items-center",
           openedPath === path && "text-[#0052ff]",
-          !isDirectory && "ml-3"
+          !isDirectory && "ml-3",
         )}
       >
         {isDirectory &&
@@ -229,7 +223,7 @@ const FiletreeItem = ({
                   path,
                   fileOrFolder,
                   updateFiletree,
-                  openPath
+                  openPath,
                 )
               }
             />
@@ -240,7 +234,7 @@ const FiletreeItem = ({
                 <span key={child.path} className={isOpen ? "" : "hidden"}>
                   <FiletreeItem {...child} updateFiletree={updateFiletree} />
                 </span>
-              )
+              ),
           )}
         </ul>
       )}
@@ -253,7 +247,7 @@ const makeNewFileOrFolder = async (
   path: string,
   fileOrFolder: "file" | "folder",
   updateFiletree: () => void,
-  openPath: (path: string) => void
+  openPath: (path: string) => void,
 ) => {
   const newPath = `${path}/${newName}`;
   const fileAlreadyExists = await exists(newPath);
