@@ -14,7 +14,6 @@ tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5", features = [
-  "updater",
   "dialog-all",
   "path-all",
   "fs-all",
