@@ -55,5 +55,5 @@ jobs:
           tagName: ${{ github.ref }}
           releaseName: "Release ${{ github.ref }}"
           releaseBody: "See the assets to download this version and install."
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
