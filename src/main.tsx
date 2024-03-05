@@ -7,6 +7,7 @@ import {
   VaultProvider,
   SettingsProvider,
   ContextMenuProvider,
+  CmdkProvider,
 } from "@/hooks";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -14,11 +15,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <FiletreeProvider>
       <SettingsProvider>
         <VaultProvider>
-          <ContextMenuProvider>
-            <App />
-          </ContextMenuProvider>
+          <CmdkProvider>
+            <ContextMenuProvider>
+              <App />
+            </ContextMenuProvider>
+          </CmdkProvider>
         </VaultProvider>
       </SettingsProvider>
     </FiletreeProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
