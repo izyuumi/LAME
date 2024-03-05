@@ -4,8 +4,8 @@ const config = {
   // darkMode: "class",
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["wireframe", "black"],
-  }
+    themes: ["black", "wireframe"],
+  },
 };
 
 export default config;
