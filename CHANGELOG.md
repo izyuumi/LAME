@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/izyuumi/LAME/compare/v0.1.0...v0.2.0) (2024-03-06)
+
+
+### Features
+
+* add theme picker ([6555c3d](https://github.com/izyuumi/LAME/commit/6555c3d5a49fe26069e11dfa656d06d330b5a268))
+
+
+
 # [0.1.0](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.8...v0.1.0) (2024-03-06)
 
 
@@ -86,15 +95,6 @@
 ### Performance Improvements
 
 * add build optimizations ([1308019](https://github.com/izyuumi/LAME/commit/1308019299620decd2dfbdad11c458164355ecde))
-
-
-
-## [0.0.1-alpha.5](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2024-03-05)
-
-
-### Reverts
-
-* remove updater ([ca4e4cc](https://github.com/izyuumi/LAME/commit/ca4e4cc443e408a47e0ff944765d38fef12c46f1))
 
 
 
