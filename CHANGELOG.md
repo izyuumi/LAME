@@ -1,3 +1,12 @@
+## [0.4.5](https://github.com/izyuumi/LAME/compare/v0.4.4...v0.4.5) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** use maintained release creating gh action ([f221115](https://github.com/izyuumi/LAME/commit/f221115c4f4f474910bd896b0bf0e2c639239f2a))
+
+
+
 ## [0.4.4](https://github.com/izyuumi/LAME/compare/v0.4.3...v0.4.4) (2024-03-06)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **ci:** add git_user_signingkey and git_commit_gpgsign as true ([2849dcc](https://github.com/izyuumi/LAME/commit/2849dcc93cc7bfffe1110a576b40507bb9377db8))
-
-
-
-# [0.4.0](https://github.com/izyuumi/LAME/compare/v0.3.0...v0.4.0) (2024-03-06)
-
-
-### Features
-
-* **ci:** commit as different step ([8b19f82](https://github.com/izyuumi/LAME/commit/8b19f82aad646401f6e368ee7c13012d9216096e))
 
 
 
