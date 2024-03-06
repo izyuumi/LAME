@@ -1,3 +1,13 @@
+## [0.4.17](https://github.com/izyuumi/LAME/compare/v0.4.16...v0.4.17) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** manually version to v0.4.16 ([0c8686b](https://github.com/izyuumi/LAME/commit/0c8686b4000db652da708f1ed82101b08de98c63))
+* **ci:** use version path for cargo.toml ([49ca415](https://github.com/izyuumi/LAME/commit/49ca415659f423b3bed25cadc82c95468333b97b))
+
+
+
 ## [0.4.16](https://github.com/izyuumi/LAME/compare/v0.4.15...v0.4.16) (2024-03-06)
 
 
@@ -32,15 +42,6 @@
 ### Bug Fixes
 
 * **ci:** git add all changes from conventional commit action ([ba080b2](https://github.com/izyuumi/LAME/commit/ba080b2246eb81484ed710fd2bf060d6a84b0e58))
-
-
-
-## [0.4.12](https://github.com/izyuumi/LAME/compare/v0.4.11...v0.4.12) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** push version file updates ([de5684d](https://github.com/izyuumi/LAME/commit/de5684d02ba2642b6a18787c8af6850ee6ed10be))
 
 
 
