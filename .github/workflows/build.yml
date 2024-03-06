@@ -29,6 +29,13 @@ jobs:
           skip-tag: "true"
           git-user-name: ${{ secrets.GH_USER_NAME }}
           git-user-email: ${{ secrets.GH_EMAIL }}
+          skip-commit: "true"
+
+      - name: Commit the new changelog
+        run: |
+          git add CHANGELOG.md
+          git commit -m "chore(release): ${{ steps.changelog.outputs.tag }}"
+          git push
 
       - name: Create Release
         uses: actions/create-release@v1
