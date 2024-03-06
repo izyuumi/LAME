@@ -2,7 +2,7 @@ name: Release App
 on:
   push:
     branches:
-      - v*
+      - main
 
 jobs:
   create-release:
