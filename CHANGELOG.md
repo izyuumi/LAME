@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/izyuumi/LAME/compare/v0.3.0...v0.3.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** mark release as latest after app builiding ([c68bf1e](https://github.com/izyuumi/LAME/commit/c68bf1e66047799844e40aef673390224453ccc9))
+
+
+
 # [0.3.0](https://github.com/izyuumi/LAME/compare/v0.2.0...v0.3.0) (2024-03-06)
 
 
@@ -73,15 +82,6 @@
 ### Bug Fixes
 
 * skip tag in build ([fc41d2a](https://github.com/izyuumi/LAME/commit/fc41d2a600f39256de2b661687850c70d77c77fa))
-
-
-
-## [0.0.1-alpha.7](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2024-03-06)
-
-
-### Features
-
-* automate changelog ([3254ecf](https://github.com/izyuumi/LAME/commit/3254ecf4ef8891d1354a4d77d8cd472c77604580))
 
 
 
