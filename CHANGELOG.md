@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/izyuumi/LAME/compare/v0.3.0...v0.4.0) (2024-03-06)
+
+
+### Features
+
+* **ci:** commit as different step ([8b19f82](https://github.com/izyuumi/LAME/commit/8b19f82aad646401f6e368ee7c13012d9216096e))
+
+
+
 # [0.3.0](https://github.com/izyuumi/LAME/compare/v0.2.0...v0.3.0) (2024-03-06)
 
 
@@ -43,28 +52,6 @@
 ### Features
 
 * automate changelog ([3254ecf](https://github.com/izyuumi/LAME/commit/3254ecf4ef8891d1354a4d77d8cd472c77604580))
-
-
-
-## [0.0.1-alpha.6](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2024-03-06)
-
-
-### Bug Fixes
-
-* use black as default daisyui theme ([ade16d0](https://github.com/izyuumi/LAME/commit/ade16d001854f0ac4b070036ba1f51181ff2b39d))
-
-
-### Features
-
-* add global command menu ([0302c74](https://github.com/izyuumi/LAME/commit/0302c74947b343f5d93f5364d600e3145fff038a))
-* add icons ([c5f6e2b](https://github.com/izyuumi/LAME/commit/c5f6e2be95df4315d535ebf25aa1e6813870c2f3))
-* color themes from daisyUI ([#1](https://github.com/izyuumi/LAME/issues/1)) ([beab82b](https://github.com/izyuumi/LAME/commit/beab82b73c46e1f3a714f0fd8520124709699acc))
-* release when build succeeds ([b8abfbb](https://github.com/izyuumi/LAME/commit/b8abfbb69629e8cabebb00babd7907b81238af78))
-
-
-### Performance Improvements
-
-* add build optimizations ([1308019](https://github.com/izyuumi/LAME/commit/1308019299620decd2dfbdad11c458164355ecde))
 
 
 
