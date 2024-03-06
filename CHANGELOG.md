@@ -1,3 +1,12 @@
+## [0.4.13](https://github.com/izyuumi/LAME/compare/v0.4.12...v0.4.13) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** git add all changes from conventional commit action ([ba080b2](https://github.com/izyuumi/LAME/commit/ba080b2246eb81484ed710fd2bf060d6a84b0e58))
+
+
+
 ## [0.4.12](https://github.com/izyuumi/LAME/compare/v0.4.11...v0.4.12) (2024-03-06)
 
 
@@ -33,15 +42,6 @@
 ### Bug Fixes
 
 * **ci:** pass id from the created release ([cfbe168](https://github.com/izyuumi/LAME/commit/cfbe1689f67f5865d56eb6a9fb5d4b1f73d8c1df))
-
-
-
-## [0.4.8](https://github.com/izyuumi/LAME/compare/v0.4.7...v0.4.8) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** pass tagName not releaseId ([7c70182](https://github.com/izyuumi/LAME/commit/7c701823e1e35c58efcd44c55e9d9e31f7c9d358))
 
 
 
