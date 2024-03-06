@@ -1,4 +1,14 @@
+import { getVersion } from "@tauri-apps/api/app";
+import { useQuery } from "@tanstack/react-query";
+import { Github } from "lucide-react";
+import { open } from "@tauri-apps/api/shell";
+
 function SettingsGeneral() {
+  const { data: appVersion } = useQuery({
+    queryKey: ["appVersion"],
+    queryFn: async () => await getVersion(),
+  });
+
   return (
     <>
       <label className="form-control w-full max-w-xs">
@@ -14,6 +24,20 @@ function SettingsGeneral() {
           <option value="wireframe">Wireframe</option>
         </select>
       </label>
+      <div className="divider"></div>
+      <div className="flex items-center justify-center gap-4">
+        <button
+          role="button"
+          className="btn btn-ghost btn-sm btn-circle"
+          onClick={() =>
+            open("https://github.com/izyuumi/LAME/releases/latest")
+          }
+          aria-label="Go to GitHub Repository for LAME"
+        >
+          <Github size={20} />
+        </button>
+        <p>Version: v{appVersion}</p>
+      </div>
     </>
   );
 }
