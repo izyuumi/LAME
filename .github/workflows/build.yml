@@ -100,7 +100,6 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: $tag
           releaseId: $tag
           releaseDraft: false
           prerelease: false
