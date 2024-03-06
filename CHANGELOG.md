@@ -1,3 +1,12 @@
+## [0.4.9](https://github.com/izyuumi/LAME/compare/v0.4.8...v0.4.9) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** pass id from the created release ([cfbe168](https://github.com/izyuumi/LAME/commit/cfbe1689f67f5865d56eb6a9fb5d4b1f73d8c1df))
+
+
+
 ## [0.4.8](https://github.com/izyuumi/LAME/compare/v0.4.7...v0.4.8) (2024-03-06)
 
 
@@ -32,15 +41,6 @@
 ### Bug Fixes
 
 * **ci:** use maintained release creating gh action ([f221115](https://github.com/izyuumi/LAME/commit/f221115c4f4f474910bd896b0bf0e2c639239f2a))
-
-
-
-## [0.4.4](https://github.com/izyuumi/LAME/compare/v0.4.3...v0.4.4) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** remove tagName to tauri-actions ([4a3afda](https://github.com/izyuumi/LAME/commit/4a3afda5868f162d0e97b2e317abd49cea490859))
 
 
 
