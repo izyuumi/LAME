@@ -49,6 +49,9 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
+    outputs:
+      tag: ${{ steps.changelog.outputs.tag }}
+
   publish-tauri:
     permissions:
       contents: write
@@ -96,8 +99,7 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: ${{ github.ref }}
-          releaseName: ${{ github.ref }}
-          releaseBody: "See the assets to download and install this version of the app"
+          tagName: ${{ needs.create-release.outputs.tag }}
+          releaseId: ${{ needs.create-release.outputs.tag }}
           releaseDraft: false
           prerelease: false
