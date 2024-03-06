@@ -29,16 +29,16 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           skip-tag: "true"
-          skip-commit: "true"
+          # skip-commit: "true"
           git-user-name: ${{ secrets.GH_USER_NAME }}
           git-user-email: ${{ secrets.GH_EMAIL }}
           version-file: src-tauri/Cargo.toml
 
-      - name: Commit the new changelog
-        run: |
-          git add .
-          git commit -m "chore(release): ${{ steps.changelog.outputs.tag }}"
-          git push
+      # - name: Commit the new changelog
+      #   run: |
+      #     git add .
+      #     git commit -m "chore(release): ${{ steps.changelog.outputs.tag }}"
+      #     git push
 
       - name: Create Release
         id: release
