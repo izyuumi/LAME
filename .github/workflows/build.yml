@@ -1,8 +1,8 @@
 name: Release App
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -66,4 +66,3 @@ jobs:
         with:
           github-token: ${{ secrets.github_token }}
           git-message: "chore(release): {version}"
-          skip-tag: true
