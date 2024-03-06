@@ -1,3 +1,14 @@
+## [0.4.11](https://github.com/izyuumi/LAME/compare/v0.4.10...v0.4.11) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** comma separated version file paths in single string ([7b5c765](https://github.com/izyuumi/LAME/commit/7b5c7653f2c71785ceb90603b1d61fdf8030243b))
+* **ci:** remove brackets from version file list ([ad8a43f](https://github.com/izyuumi/LAME/commit/ad8a43f93c83a5f39d38422ca92d7984717a73d9))
+* **ci:** update version in cargo.toml ([9c0571f](https://github.com/izyuumi/LAME/commit/9c0571ffe292757b5c9b19afb06e199f7ce14048))
+
+
+
 ## [0.4.10](https://github.com/izyuumi/LAME/compare/v0.4.9...v0.4.10) (2024-03-06)
 
 
@@ -31,16 +42,6 @@
 ### Bug Fixes
 
 * **ci:** wrap tag in quotes ([ab8c862](https://github.com/izyuumi/LAME/commit/ab8c862edc3be51e9adc9602297c69cde70a94e8))
-
-
-
-## [0.4.6](https://github.com/izyuumi/LAME/compare/v0.4.5...v0.4.6) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** fix tagName variable ([56d160a](https://github.com/izyuumi/LAME/commit/56d160a4870762acf45a78bdcd22fda50f650123))
-* **ci:** use needs to pass variables between jobs ([c6f1be8](https://github.com/izyuumi/LAME/commit/c6f1be840aca25f9135bd284a10db5e14848da63))
 
 
 
