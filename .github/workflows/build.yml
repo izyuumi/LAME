@@ -31,7 +31,7 @@ jobs:
           skip-tag: "true"
           git-user-name: ${{ secrets.GH_USER_NAME }}
           git-user-email: ${{ secrets.GH_EMAIL }}
-          version-file: src-tauri/Cargo.toml
+          version-file: src-tauri/tauri.conf.json
           version-path: package.version
 
       - name: Create Release
