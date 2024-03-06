@@ -1,9 +1,10 @@
-# [0.1.0](https://github.com/izyuumi/LAME/compare/v0.4.15...v0.1.0) (2024-03-06)
+## [0.4.16](https://github.com/izyuumi/LAME/compare/v0.4.15...v0.4.16) (2024-03-06)
 
 
 ### Bug Fixes
 
 * **ci:** commit in conventional-changelog-action ([f6881ed](https://github.com/izyuumi/LAME/commit/f6881edeeb310e4eb7b9dc7c170ec7e343a93e8c))
+* **ci:** update package.json and cargo.toml ([001ea1b](https://github.com/izyuumi/LAME/commit/001ea1b20fbefb6204a0f9fef3c1404f48aec1e6))
 
 
 
