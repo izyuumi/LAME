@@ -1,3 +1,12 @@
+## [0.0.2](https://github.com/izyuumi/LAME/compare/v0.4.17...v0.0.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** use tauri.conf.json as version file ([fc67cd5](https://github.com/izyuumi/LAME/commit/fc67cd50c1c439c9ed80e32e4946e274659b0448))
+
+
+
 ## [0.4.17](https://github.com/izyuumi/LAME/compare/v0.4.16...v0.4.17) (2024-03-06)
 
 
@@ -33,15 +42,6 @@
 ### Bug Fixes
 
 * **ci:** remove ./ from version files ([f6b2106](https://github.com/izyuumi/LAME/commit/f6b2106e324171aade27d0d26cd1f39d37882223))
-
-
-
-## [0.4.13](https://github.com/izyuumi/LAME/compare/v0.4.12...v0.4.13) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** git add all changes from conventional commit action ([ba080b2](https://github.com/izyuumi/LAME/commit/ba080b2246eb81484ed710fd2bf060d6a84b0e58))
 
 
 
