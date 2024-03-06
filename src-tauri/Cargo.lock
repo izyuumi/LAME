@@ -1437,7 +1437,7 @@ dependencies = [
 
 [[package]]
 name = "lame"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "html2md-rs",
  "markdown",
