@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/izyuumi/LAME/compare/v0.4.0...v0.4.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** add git_user_signingkey and git_commit_gpgsign as true ([2849dcc](https://github.com/izyuumi/LAME/commit/2849dcc93cc7bfffe1110a576b40507bb9377db8))
+
+
+
 # [0.4.0](https://github.com/izyuumi/LAME/compare/v0.3.0...v0.4.0) (2024-03-06)
 
 
@@ -43,15 +52,6 @@
 ### Bug Fixes
 
 * skip tag in build ([fc41d2a](https://github.com/izyuumi/LAME/commit/fc41d2a600f39256de2b661687850c70d77c77fa))
-
-
-
-## [0.0.1-alpha.7](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2024-03-06)
-
-
-### Features
-
-* automate changelog ([3254ecf](https://github.com/izyuumi/LAME/commit/3254ecf4ef8891d1354a4d77d8cd472c77604580))
 
 
 
