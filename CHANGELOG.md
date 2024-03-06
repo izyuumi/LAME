@@ -1,3 +1,13 @@
+## [0.4.6](https://github.com/izyuumi/LAME/compare/v0.4.5...v0.4.6) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** fix tagName variable ([56d160a](https://github.com/izyuumi/LAME/commit/56d160a4870762acf45a78bdcd22fda50f650123))
+* **ci:** use needs to pass variables between jobs ([c6f1be8](https://github.com/izyuumi/LAME/commit/c6f1be840aca25f9135bd284a10db5e14848da63))
+
+
+
 ## [0.4.5](https://github.com/izyuumi/LAME/compare/v0.4.4...v0.4.5) (2024-03-06)
 
 
@@ -31,15 +41,6 @@
 ### Bug Fixes
 
 * **ci:** use already-made tag and release for tauri-actions ([f0f6036](https://github.com/izyuumi/LAME/commit/f0f6036b40b00231849320c04dd8c916a5e9c972))
-
-
-
-## [0.4.1](https://github.com/izyuumi/LAME/compare/v0.4.0...v0.4.1) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** add git_user_signingkey and git_commit_gpgsign as true ([2849dcc](https://github.com/izyuumi/LAME/commit/2849dcc93cc7bfffe1110a576b40507bb9377db8))
 
 
 
