@@ -57,3 +57,9 @@ jobs:
           releaseBody: "See the assets to download and install this version of the app"
           releaseDraft: false
           prerelease: false
+
+      - name: Conventional Changelog Action
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.github_token }}
+          git-message: "chore(release): {version}"
