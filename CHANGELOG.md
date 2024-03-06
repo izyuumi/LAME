@@ -1,3 +1,12 @@
+## [0.4.12](https://github.com/izyuumi/LAME/compare/v0.4.11...v0.4.12) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** push version file updates ([de5684d](https://github.com/izyuumi/LAME/commit/de5684d02ba2642b6a18787c8af6850ee6ed10be))
+
+
+
 ## [0.4.11](https://github.com/izyuumi/LAME/compare/v0.4.10...v0.4.11) (2024-03-06)
 
 
@@ -33,15 +42,6 @@
 ### Bug Fixes
 
 * **ci:** pass tagName not releaseId ([7c70182](https://github.com/izyuumi/LAME/commit/7c701823e1e35c58efcd44c55e9d9e31f7c9d358))
-
-
-
-## [0.4.7](https://github.com/izyuumi/LAME/compare/v0.4.6...v0.4.7) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** wrap tag in quotes ([ab8c862](https://github.com/izyuumi/LAME/commit/ab8c862edc3be51e9adc9602297c69cde70a94e8))
 
 
 
