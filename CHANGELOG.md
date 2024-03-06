@@ -1,3 +1,12 @@
+## [0.4.8](https://github.com/izyuumi/LAME/compare/v0.4.7...v0.4.8) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** pass tagName not releaseId ([7c70182](https://github.com/izyuumi/LAME/commit/7c701823e1e35c58efcd44c55e9d9e31f7c9d358))
+
+
+
 ## [0.4.7](https://github.com/izyuumi/LAME/compare/v0.4.6...v0.4.7) (2024-03-06)
 
 
@@ -32,15 +41,6 @@
 ### Bug Fixes
 
 * **ci:** remove tagName to tauri-actions ([4a3afda](https://github.com/izyuumi/LAME/commit/4a3afda5868f162d0e97b2e317abd49cea490859))
-
-
-
-## [0.4.3](https://github.com/izyuumi/LAME/compare/v0.4.2...v0.4.3) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** write tag name to GITHUB_ENV ([b5fe2d8](https://github.com/izyuumi/LAME/commit/b5fe2d89cc949b628075c9d47fecd58d2da3565d))
 
 
 
