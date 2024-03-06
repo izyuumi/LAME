@@ -1,41 +1,52 @@
+version = "0.1.0"
+
 [package]
 name = "lame"
 version = "0.0.1"
 description = "Just another super minimalistic markdown editor"
-authors = ["Yumi <mail@yumi.to>"]
+authors = [ "Yumi <mail@yumi.to>" ]
 license = "MIT License"
 repository = "https://github.com/izyumidev/LAME"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
 
-[profile.release] # https://tauri.app/v1/guides/building/app-size#rust-build-time-optimizations
-panic = "abort"   # Strip expensive panic clean-up logic
-codegen-units = 1 # Compile crates one after another so the compiler can optimize better
-lto = true        # Enables link to optimizations
-opt-level = "s"   # Optimize for binary size
-strip = true      # Remove debug symbols
-
-[build-dependencies]
-tauri-build = { version = "1.5", features = [] }
+[build-dependencies.tauri-build]
+version = "1.5"
+features = [ ]
 
 [dependencies]
-tauri = { version = "1.5", features = [
+serde_json = "1.0"
+tokio = "1.35.1"
+markdown = "1.0.0-alpha.16"
+html2md-rs = "0.1.1"
+
+  [dependencies.tauri]
+  version = "1.5"
+  features = [
   "dialog-all",
   "path-all",
   "fs-all",
   "window-all",
-  "macos-private-api",
-] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-tokio = "1.35.1"
-tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
-tauri-plugin-fs-watch = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
-markdown = "1.0.0-alpha.16"
-html2md-rs = "0.1.1"
+  "macos-private-api"
+]
+
+  [dependencies.serde]
+  version = "1.0"
+  features = [ "derive" ]
+
+  [dependencies.tauri-plugin-store]
+  git = "https://github.com/tauri-apps/plugins-workspace"
+  branch = "v1"
+
+  [dependencies.tauri-plugin-fs-watch]
+  git = "https://github.com/tauri-apps/plugins-workspace"
+  branch = "v1"
 
 [features]
-# this feature is used for production builds or when `devPath` points to the filesystem
-# DO NOT REMOVE!!
-custom-protocol = ["tauri/custom-protocol"]
+custom-protocol = [ "tauri/custom-protocol" ]
