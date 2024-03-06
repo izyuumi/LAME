@@ -40,6 +40,7 @@ jobs:
           git push
 
       - name: Create Release
+        id: release
         uses: ncipollo/release-action@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:
@@ -50,7 +51,7 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
     outputs:
-      tag: ${{ steps.changelog.outputs.tag }}
+      releaseId: ${{ steps.release.outputs.id }}
 
   publish-tauri:
     needs: create-release
@@ -100,6 +101,6 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: "${{ needs.create-release.outputs.tag }}"
+          tagName: "${{ needs.create-release.outputs.releaseId }}"
           releaseDraft: false
           prerelease: false
