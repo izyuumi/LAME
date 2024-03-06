@@ -49,8 +49,9 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
-    outputs:
-      tag: ${{ steps.changelog.outputs.tag }}
+      - name: Write tag to environment
+        id: tag
+        run: echo "tag=${{ steps.changelog.outputs.tag }}" >> $GITHUB_ENV
 
   publish-tauri:
     permissions:
@@ -99,7 +100,7 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: ${{ needs.create-release.outputs.tag }}
-          releaseId: ${{ needs.create-release.outputs.tag }}
+          tagName: $tag
+          releaseId: $tag
           releaseDraft: false
           prerelease: false
