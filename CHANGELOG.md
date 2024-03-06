@@ -1,3 +1,12 @@
+## [0.4.4](https://github.com/izyuumi/LAME/compare/v0.4.3...v0.4.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** remove tagName to tauri-actions ([4a3afda](https://github.com/izyuumi/LAME/commit/4a3afda5868f162d0e97b2e317abd49cea490859))
+
+
+
 ## [0.4.3](https://github.com/izyuumi/LAME/compare/v0.4.2...v0.4.3) (2024-03-06)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * **ci:** commit as different step ([8b19f82](https://github.com/izyuumi/LAME/commit/8b19f82aad646401f6e368ee7c13012d9216096e))
-
-
-
-# [0.3.0](https://github.com/izyuumi/LAME/compare/v0.2.0...v0.3.0) (2024-03-06)
-
-
-### Features
-
-* **ci:** sign commits ([965836b](https://github.com/izyuumi/LAME/commit/965836bfa86f2e90042e79f2dac5d045da0a151e))
 
 
 
