@@ -4,6 +4,9 @@ on:
     tags:
       - "*"
 
+permissions:
+  contents: write
+
 jobs:
   publish-tauri:
     permissions:
@@ -63,3 +66,4 @@ jobs:
         with:
           github-token: ${{ secrets.github_token }}
           git-message: "chore(release): {version}"
+          skip-tag: true
