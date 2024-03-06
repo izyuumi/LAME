@@ -1,3 +1,12 @@
+## [0.4.14](https://github.com/izyuumi/LAME/compare/v0.4.13...v0.4.14) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** remove ./ from version files ([f6b2106](https://github.com/izyuumi/LAME/commit/f6b2106e324171aade27d0d26cd1f39d37882223))
+
+
+
 ## [0.4.13](https://github.com/izyuumi/LAME/compare/v0.4.12...v0.4.13) (2024-03-06)
 
 
@@ -33,15 +42,6 @@
 ### Bug Fixes
 
 * **ci:** pass release id to releaseId ([92acd24](https://github.com/izyuumi/LAME/commit/92acd248509ef5149c62da17d51f5be139c16012))
-
-
-
-## [0.4.9](https://github.com/izyuumi/LAME/compare/v0.4.8...v0.4.9) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** pass id from the created release ([cfbe168](https://github.com/izyuumi/LAME/commit/cfbe1689f67f5865d56eb6a9fb5d4b1f73d8c1df))
 
 
 
