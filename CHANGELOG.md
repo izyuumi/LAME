@@ -1,3 +1,12 @@
+## [0.4.7](https://github.com/izyuumi/LAME/compare/v0.4.6...v0.4.7) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** wrap tag in quotes ([ab8c862](https://github.com/izyuumi/LAME/commit/ab8c862edc3be51e9adc9602297c69cde70a94e8))
+
+
+
 ## [0.4.6](https://github.com/izyuumi/LAME/compare/v0.4.5...v0.4.6) (2024-03-06)
 
 
@@ -32,15 +41,6 @@
 ### Bug Fixes
 
 * **ci:** write tag name to GITHUB_ENV ([b5fe2d8](https://github.com/izyuumi/LAME/commit/b5fe2d89cc949b628075c9d47fecd58d2da3565d))
-
-
-
-## [0.4.2](https://github.com/izyuumi/LAME/compare/v0.4.1...v0.4.2) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** use already-made tag and release for tauri-actions ([f0f6036](https://github.com/izyuumi/LAME/commit/f0f6036b40b00231849320c04dd8c916a5e9c972))
 
 
 
