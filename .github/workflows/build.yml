@@ -18,6 +18,9 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5
@@ -34,9 +37,6 @@ jobs:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
