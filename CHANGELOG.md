@@ -1,3 +1,12 @@
+## [0.4.2](https://github.com/izyuumi/LAME/compare/v0.4.1...v0.4.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** use already-made tag and release for tauri-actions ([f0f6036](https://github.com/izyuumi/LAME/commit/f0f6036b40b00231849320c04dd8c916a5e9c972))
+
+
+
 ## [0.4.1](https://github.com/izyuumi/LAME/compare/v0.4.0...v0.4.1) (2024-03-06)
 
 
@@ -43,15 +52,6 @@
 ### Reverts
 
 * run build ci on push to main ([d5a90c3](https://github.com/izyuumi/LAME/commit/d5a90c3a6078f9d1fd5a10a61571cdb8d2ba0dbd))
-
-
-
-## [0.0.1-alpha.8](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2024-03-06)
-
-
-### Bug Fixes
-
-* skip tag in build ([fc41d2a](https://github.com/izyuumi/LAME/commit/fc41d2a600f39256de2b661687850c70d77c77fa))
 
 
 
