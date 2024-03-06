@@ -1,3 +1,12 @@
+## [0.4.15](https://github.com/izyuumi/LAME/compare/v0.4.14...v0.4.15) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** only update version on cargo.toml ([dcd6c41](https://github.com/izyuumi/LAME/commit/dcd6c4124982e06a0202654158a24b4e1507a7ca))
+
+
+
 ## [0.4.14](https://github.com/izyuumi/LAME/compare/v0.4.13...v0.4.14) (2024-03-06)
 
 
@@ -33,15 +42,6 @@
 * **ci:** comma separated version file paths in single string ([7b5c765](https://github.com/izyuumi/LAME/commit/7b5c7653f2c71785ceb90603b1d61fdf8030243b))
 * **ci:** remove brackets from version file list ([ad8a43f](https://github.com/izyuumi/LAME/commit/ad8a43f93c83a5f39d38422ca92d7984717a73d9))
 * **ci:** update version in cargo.toml ([9c0571f](https://github.com/izyuumi/LAME/commit/9c0571ffe292757b5c9b19afb06e199f7ce14048))
-
-
-
-## [0.4.10](https://github.com/izyuumi/LAME/compare/v0.4.9...v0.4.10) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** pass release id to releaseId ([92acd24](https://github.com/izyuumi/LAME/commit/92acd248509ef5149c62da17d51f5be139c16012))
 
 
 
