@@ -1,4 +1,4 @@
-# [0.1.0](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.8...v0.1.0) (2024-03-06)
+# [0.2.0](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.8...v0.2.0) (2024-03-06)
 
 
 ### Bug Fixes
@@ -8,10 +8,14 @@
 * create release before building ([519ebb1](https://github.com/izyuumi/LAME/commit/519ebb1a5e029e1e8e8c5c6bbcc8d7fad2ce1d79))
 * fix issue where cursor is misplaced when open file changes ([5a71c3b](https://github.com/izyuumi/LAME/commit/5a71c3b83e647019c0eee185458a551127c815a7))
 * run build action on push to main ([ec3fe9f](https://github.com/izyuumi/LAME/commit/ec3fe9f026eb9b94dafc43919654a523bad5a7d3))
-* run build ci on push to branches prefixed with v ([f452c48](https://github.com/izyuumi/LAME/commit/f452c484906ab6e2ed405be1b14e2303589b1198))
 * skip tagging when creating changelog ([d4743ac](https://github.com/izyuumi/LAME/commit/d4743ac88afccad0e683b378ba57a391f7891afa))
 * use GITHUB_TOKEN in build ci ([ef72b9e](https://github.com/izyuumi/LAME/commit/ef72b9e3b4a0d5dc0350690914f92b931d6b14d2))
 * use GITHUB_TOKEN when building ([9e733bb](https://github.com/izyuumi/LAME/commit/9e733bb6ef6860c789490c9ba41d008214e1d3e0))
+
+
+### Reverts
+
+* run build ci on push to main ([d5a90c3](https://github.com/izyuumi/LAME/commit/d5a90c3a6078f9d1fd5a10a61571cdb8d2ba0dbd))
 
 
 
