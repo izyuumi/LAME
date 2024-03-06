@@ -1,13 +1,14 @@
 import { useSettings } from "@/hooks";
 import SettingsShortcuts from "./SettingsShortcuts";
 import { useState } from "react";
+import SettingsGeneral from "./SettingsGeneral";
 
 interface SettingsPage {
   [key: string]: React.ReactNode;
 }
 
 const settingsPages: SettingsPage = {
-  general: "General",
+  general: <SettingsGeneral />,
   shortcuts: <SettingsShortcuts />,
 } as const;
 
@@ -19,14 +20,12 @@ function Settings() {
 
   return (
     <dialog ref={settingsRef} className="modal">
-      <div className="modal-box flex">
-        <ul className="flex flex-col items-start">
+      <div className="modal-box border-primary flex border border-solid">
+        <ul className="flex flex-col items-start gap-2">
           {Object.keys(settingsPages).map((page) => (
-            <li
-              key={page}
-              className="w-full rounded-md p-2 hover:bg-white hover:bg-opacity-10"
-            >
+            <li key={page} className="w-full">
               <button
+                className="btn btn-ghost h-full w-full rounded-md"
                 onClick={() =>
                   setCurrentPage(page as keyof typeof settingsPages)
                 }
@@ -37,7 +36,9 @@ function Settings() {
           ))}
         </ul>
         <div className="divider divider-horizontal" />
-        <div>{settingsPages[currentPage]}</div>
+        <div className="preview h-full w-full overflow-auto">
+          {settingsPages[currentPage]}
+        </div>
       </div>
     </dialog>
   );

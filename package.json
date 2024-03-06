@@ -25,6 +25,7 @@
     "tailwind-merge": "^2.2.1",
     "tauri-plugin-fs-watch-api": "https://github.com/tauri-apps/tauri-plugin-fs-watch#v1",
     "tauri-plugin-store-api": "https://github.com/tauri-apps/tauri-plugin-store#v1",
+    "theme-change": "^2.5.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -210,7 +210,7 @@ const FiletreeItem = ({
         onContextMenu={isDirectory ? directoryContextMenu : fileContextMenu}
         className={tm(
           "flex w-full items-center",
-          openedPath === path && "text-[#0052ff]",
+          openedPath === path && "text-blue-400",
           !isDirectory && "ml-3",
         )}
       >
