@@ -1,4 +1,4 @@
-import { ContextMenuItem, useVault } from "@/hooks";
+import { ContextMenuItem, useCmdk, useVault, useContextMenu } from "@/hooks";
 import {
   type FileEntry,
   readDir,
@@ -11,10 +11,10 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
 import { watch } from "tauri-plugin-fs-watch-api";
 import TitlebarSpace from "@/components/TaskbarSpace";
-import { useContextMenu } from "@/hooks";
 
 function Filetree() {
   const { currentVaultPath, openPath } = useVault();
+  const { addCmdkCommand } = useCmdk();
 
   const [filetree, setFiletree] = useState<FileEntry[]>([]);
   const filetreeRef = useRef<HTMLUListElement>(null);
@@ -27,6 +27,17 @@ function Filetree() {
     setFileOrFolder(fileOrFolder);
     setShowFileInput(true);
   };
+
+  useEffect(() => {
+    addCmdkCommand("new-file", {
+      label: "New File",
+      action: () => initMakeNewFileOrFolder("file"),
+    });
+    addCmdkCommand("new-folder", {
+      label: "New Folder",
+      action: () => initMakeNewFileOrFolder("folder"),
+    });
+  }, []);
 
   const watchForFileChanges = async (path: string) => {
     await watch([path], async () => await getDirectoryContents(path), {
@@ -199,7 +210,7 @@ const FiletreeItem = ({
         onContextMenu={isDirectory ? directoryContextMenu : fileContextMenu}
         className={tm(
           "flex w-full items-center",
-          openedPath === path && "text-[#0052ff]",
+          openedPath === path && "text-blue-400",
           !isDirectory && "ml-3",
         )}
       >

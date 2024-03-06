@@ -43,6 +43,7 @@ export function Dashboard() {
 
   useEffect(() => {
     readFile();
+    editor?.commands.focus();
   }, [openedPath]);
 
   return (

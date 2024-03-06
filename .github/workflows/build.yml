@@ -1,11 +1,56 @@
 name: Release App
+
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - main
 
 jobs:
+  create-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          skip-tag: "true"
+          git-user-name: ${{ secrets.GH_USER_NAME }}
+          git-user-email: ${{ secrets.GH_EMAIL }}
+          version-file: src-tauri/tauri.conf.json
+          version-path: package.version
+
+      - name: Create Release
+        id: release
+        uses: ncipollo/release-action@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: ${{ steps.changelog.outputs.tag }}
+          name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          draft: "true"
+
+    outputs:
+      releaseId: ${{ steps.release.outputs.id }}
+
   publish-tauri:
+    needs: create-release
     permissions:
       contents: write
     strategy:
@@ -16,7 +61,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
@@ -51,9 +96,10 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          tagName: ${{ github.ref }}
-          releaseName: "Release ${{ github.ref }}"
-          releaseBody: "See the assets to download this version and install."
+          releaseId: "${{ needs.create-release.outputs.releaseId }}"
           releaseDraft: false
           prerelease: false
+          updaterJsonKeepUniversal: true

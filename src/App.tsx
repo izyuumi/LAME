@@ -5,6 +5,8 @@ import Sidebar from "@/components/Sidebar";
 import { Onboard, Dashboard } from "@/pages";
 import Filetree from "@/components/Filetree";
 import Settings from "@/components/settings";
+import { themeChange } from "theme-change";
+import { useEffect } from "react";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useEffect(() => {
+    themeChange(false);
+  }, []);
+
   return (
     <div className="flex">
       <div className="flex">

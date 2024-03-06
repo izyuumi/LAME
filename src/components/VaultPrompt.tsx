@@ -10,7 +10,7 @@ function VaultPrompt({
 
   return (
     <dialog ref={dialogRef} className="modal">
-      <div className="modal-box flex flex-col gap-4">
+      <div className="modal-box border-primary flex flex-col gap-4 border border-solid">
         <h2>Are you sure you want to close this vault?</h2>
         <p>You will always be able to reopen it later.</p>
         <div className="flex justify-between">
