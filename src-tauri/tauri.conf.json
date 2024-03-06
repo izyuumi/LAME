@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "LAME",
-    "version": "0.0.2"
+    "version": "0.0.1"
   },
   "tauri": {
     "macOSPrivateApi": true,
@@ -18,9 +18,7 @@
       },
       "fs": {
         "all": true,
-        "scope": [
-          "**"
-        ]
+        "scope": ["**"]
       },
       "path": {
         "all": true
