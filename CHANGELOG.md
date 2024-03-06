@@ -1,3 +1,12 @@
+## [0.4.10](https://github.com/izyuumi/LAME/compare/v0.4.9...v0.4.10) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ci:** pass release id to releaseId ([92acd24](https://github.com/izyuumi/LAME/commit/92acd248509ef5149c62da17d51f5be139c16012))
+
+
+
 ## [0.4.9](https://github.com/izyuumi/LAME/compare/v0.4.8...v0.4.9) (2024-03-06)
 
 
@@ -32,15 +41,6 @@
 
 * **ci:** fix tagName variable ([56d160a](https://github.com/izyuumi/LAME/commit/56d160a4870762acf45a78bdcd22fda50f650123))
 * **ci:** use needs to pass variables between jobs ([c6f1be8](https://github.com/izyuumi/LAME/commit/c6f1be840aca25f9135bd284a10db5e14848da63))
-
-
-
-## [0.4.5](https://github.com/izyuumi/LAME/compare/v0.4.4...v0.4.5) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** use maintained release creating gh action ([f221115](https://github.com/izyuumi/LAME/commit/f221115c4f4f474910bd896b0bf0e2c639239f2a))
 
 
 
