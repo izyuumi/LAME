@@ -6,26 +6,51 @@ on:
       - main
 
 jobs:
-  release-please:
+  create-release:
     permissions:
       contents: write
-      pull-requests: write
     runs-on: ubuntu-latest
 
     steps:
-      - uses: google-github-actions/release-please-action@v4
-        id: release
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
         with:
-          path: "src-tauri"
-          release-type: "rust"
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          skip-tag: "true"
+          git-user-name: ${{ secrets.GH_USER_NAME }}
+          git-user-email: ${{ secrets.GH_EMAIL }}
+          version-file: src-tauri/tauri.conf.json
+          version-path: package.version
+
+      - name: Create Release
+        id: release
+        uses: ncipollo/release-action@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: ${{ steps.changelog.outputs.tag }}
+          name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          draft: "true"
 
     outputs:
-      release_created: ${{ steps.release.outputs.src-tauri--release_created }}
-      tag: ${{ steps.release.outputs.src-tauri--tag_name }}
+      releaseId: ${{ steps.release.outputs.id }}
 
   publish-tauri:
-    needs: release-please
-    if: needs.release-please.outputs.release_created == 'true'
+    needs: create-release
     permissions:
       contents: write
     strategy:
@@ -74,7 +99,7 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          tagName: ${{ needs.release-please.outputs.tag }}
+          releaseId: "${{ needs.create-release.outputs.releaseId }}"
           releaseDraft: false
           prerelease: false
           updaterJsonKeepUniversal: true
