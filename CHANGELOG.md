@@ -1,4 +1,13 @@
-# [0.6.0](https://github.com/izyuumi/LAME/compare/v0.4.0...v0.6.0) (2024-03-09)
+## [0.6.1](https://github.com/izyuumi/LAME/compare/v0.6.0...v0.6.1) (2024-03-09)
+
+
+### Bug Fixes
+
+* **ci:** release release on creation ([0ad8ff3](https://github.com/izyuumi/LAME/commit/0ad8ff3c5e9ef762b2180d70d74da7d302b8fc61))
+
+
+
+# [0.6.0](https://github.com/izyuumi/LAME/compare/v0.5.1...v0.6.0) (2024-03-09)
 
 
 ### Bug Fixes
@@ -41,24 +50,6 @@
 ### Bug Fixes
 
 * **ci:** mark release as latest after app builiding ([c68bf1e](https://github.com/izyuumi/LAME/commit/c68bf1e66047799844e40aef673390224453ccc9))
-
-
-
-# [0.3.0](https://github.com/izyuumi/LAME/compare/v0.2.0...v0.3.0) (2024-03-06)
-
-
-### Features
-
-* add version to settings general ([d44f6e0](https://github.com/izyuumi/LAME/commit/d44f6e0e55c66f8d6642c84ee0969e0c1cbc7964))
-
-
-
-# [0.2.0](https://github.com/izyuumi/LAME/compare/v0.1.0...v0.2.0) (2024-03-06)
-
-
-### Features
-
-* add theme picker ([6555c3d](https://github.com/izyuumi/LAME/commit/6555c3d5a49fe26069e11dfa656d06d330b5a268))
 
 
 
