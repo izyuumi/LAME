@@ -108,7 +108,9 @@ function Filetree() {
       </div>
       <ul
         ref={filetreeRef}
-        className={tm("bg-base-300 flex w-[150px] select-none flex-col p-1")}
+        className={tm(
+          "bg-base-300 flex select-none flex-col items-start justify-start p-1",
+        )}
       >
         {filetree.map(
           (file) =>
@@ -209,7 +211,7 @@ const FiletreeItem = ({
         }
         onContextMenu={isDirectory ? directoryContextMenu : fileContextMenu}
         className={tm(
-          "flex w-full items-center",
+          "flex w-full items-center overflow-hidden text-ellipsis whitespace-nowrap",
           openedPath === path && "text-blue-400",
           !isDirectory && "ml-3",
         )}
