@@ -35,17 +35,6 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      # - name: Create Release
-      #   id: create-release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag: ${{ needs.release-please.outputs.tag }}
-      #     body: ${{ steps.release.outputs.release_notes }}
-      #     draft: false
-      #     prerelease: false
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -85,7 +74,6 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          # releaseId: "${{ needs.create-release.outputs.releaseId }}"
           tagName: ${{ needs.release-please.outputs.tag }}
           releaseDraft: false
           prerelease: false
