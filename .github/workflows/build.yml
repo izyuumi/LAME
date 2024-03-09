@@ -44,7 +44,6 @@ jobs:
           tag: ${{ steps.changelog.outputs.tag }}
           name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
-          draft: "true"
 
     outputs:
       releaseId: ${{ steps.release.outputs.id }}
