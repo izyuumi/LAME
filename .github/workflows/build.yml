@@ -20,7 +20,7 @@ jobs:
           release-type: "rust"
 
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
+      release_created: ${{ steps.release.outputs.src-tauri--release_created }}
       tag: ${{ steps.release.outputs.src-tauri--tag_name }}
 
   publish-tauri:
