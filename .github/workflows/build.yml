@@ -19,12 +19,9 @@ jobs:
           path: "src-tauri"
           release-type: "rust"
 
-      - name: Early exit if no release is necessary
-        if: ${{ !steps.release.outputs.release_created }}
-        run: exit 0
-
     outputs:
-      releaseId: ${{ steps.release.outputs.id }}
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.src-tauri--tag_name }}
 
   publish-tauri:
     needs: release-please
@@ -35,8 +32,20 @@ jobs:
       matrix:
         platform: [macos-latest, ubuntu-20.04]
     runs-on: ${{ matrix.platform }}
+    if: ${{ needs.release-please.outputs.release_created }} == 'true'
 
     steps:
+      # - name: Create Release
+      #   id: create-release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag: ${{ needs.release-please.outputs.tag }}
+      #     body: ${{ steps.release.outputs.release_notes }}
+      #     draft: false
+      #     prerelease: false
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -77,6 +86,7 @@ jobs:
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           # releaseId: "${{ needs.create-release.outputs.releaseId }}"
+          tagName: ${{ needs.release-please.outputs.tag }}
           releaseDraft: false
           prerelease: false
           updaterJsonKeepUniversal: true
