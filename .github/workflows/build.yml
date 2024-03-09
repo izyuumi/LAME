@@ -75,7 +75,7 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          releaseId: "${{ needs.create-release.outputs.releaseId }}"
+          # releaseId: "${{ needs.create-release.outputs.releaseId }}"
           releaseDraft: false
           prerelease: false
           updaterJsonKeepUniversal: true
