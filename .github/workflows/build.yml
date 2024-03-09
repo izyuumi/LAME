@@ -6,45 +6,21 @@ on:
       - main
 
 jobs:
-  create-release:
+  release-please:
     permissions:
       contents: write
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          skip-tag: "true"
-          git-user-name: ${{ secrets.GH_USER_NAME }}
-          git-user-email: ${{ secrets.GH_EMAIL }}
-          version-file: src-tauri/tauri.conf.json
-          version-path: package.version
-
-      - name: Create Release
+      - uses: google-github-actions/release-please-action@v4
         id: release
-        uses: ncipollo/release-action@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ steps.changelog.outputs.tag }}
-          name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
-          draft: "true"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+
+      - name: Early exit if no release is necessary
+        if: ${{ !steps.release.outputs.release_created }}
+        run: exit 0
 
     outputs:
       releaseId: ${{ steps.release.outputs.id }}
