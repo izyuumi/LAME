@@ -1,4 +1,4 @@
-## [0.5.1](https://github.com/izyuumi/LAME/compare/v0.4.0...v0.5.1) (2024-03-09)
+# [0.6.0](https://github.com/izyuumi/LAME/compare/v0.4.0...v0.6.0) (2024-03-09)
 
 
 ### Bug Fixes
@@ -12,6 +12,12 @@
 * **ci:** remove unused code ([62c0a98](https://github.com/izyuumi/LAME/commit/62c0a98f0e6f58011f9ebcc28684278b2cd2c135))
 * **ci:** use rust type for release in build ([b42ad8f](https://github.com/izyuumi/LAME/commit/b42ad8ff394263e2340c709014d633a46a00ef07))
 * **ci:** use the correct variable name ([f694f5d](https://github.com/izyuumi/LAME/commit/f694f5d27ce2306ed5557bbb6f24c39c05fa4380))
+
+
+### Features
+
+* **editor:** resizable panels ([22b435a](https://github.com/izyuumi/LAME/commit/22b435af8352716115a92c2c249e82b3e9e4f892))
+* set fixed and max height for setting modal ([3d74463](https://github.com/izyuumi/LAME/commit/3d744639ba1c6933f3422c81dab2c37845e95cd6))
 
 
 ### Reverts
