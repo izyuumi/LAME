@@ -7,6 +7,8 @@ import Filetree from "@/components/Filetree";
 import Settings from "@/components/settings";
 import { themeChange } from "theme-change";
 import { useEffect } from "react";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { useFiletree } from "./hooks";
 
 const router = createBrowserRouter([
   {
@@ -24,19 +26,32 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { closeFiletree, openFiletree } = useFiletree();
+
   useEffect(() => {
     themeChange(false);
   }, []);
 
   return (
-    <div className="flex">
-      <div className="flex">
-        <Sidebar />
+    <PanelGroup direction="horizontal">
+      <Sidebar />
+      <Panel
+        collapsible
+        defaultSize={14}
+        collapsedSize={0}
+        minSize={10}
+        maxSize={30}
+        onCollapse={closeFiletree}
+        onExpand={openFiletree}
+      >
         <Filetree />
-      </div>
-      <RouterProvider router={router} />
+      </Panel>
+      <PanelResizeHandle className="w-1 bg-black" />
+      <Panel>
+        <RouterProvider router={router} />
+      </Panel>
       <Settings />
-    </div>
+    </PanelGroup>
   );
 }
 
