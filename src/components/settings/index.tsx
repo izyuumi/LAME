@@ -20,7 +20,7 @@ function Settings() {
 
   return (
     <dialog ref={settingsRef} className="modal">
-      <div className="modal-box border-primary flex border border-solid">
+      <div className="modal-box border-primary flex h-96 max-h-full border border-solid">
         <ul className="flex flex-col items-start gap-2">
           {Object.keys(settingsPages).map((page) => (
             <li key={page} className="w-full">
