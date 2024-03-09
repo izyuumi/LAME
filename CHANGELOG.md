@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/izyuumi/LAME/compare/v0.3.1...v0.4.0) (2024-03-09)
+
+
+### Features
+
+* **parser:** emit errors when parser return errors ([730c7ff](https://github.com/izyuumi/LAME/commit/730c7fffed3c91b890aa21cef85b50b195a34cfd))
+
+
+
 ## [0.3.1](https://github.com/izyuumi/LAME/compare/v0.3.0...v0.3.1) (2024-03-06)
 
 
@@ -73,15 +82,6 @@
 ### Reverts
 
 * run build ci on push to main ([d5a90c3](https://github.com/izyuumi/LAME/commit/d5a90c3a6078f9d1fd5a10a61571cdb8d2ba0dbd))
-
-
-
-## [0.0.1-alpha.8](https://github.com/izyuumi/LAME/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2024-03-06)
-
-
-### Bug Fixes
-
-* skip tag in build ([fc41d2a](https://github.com/izyuumi/LAME/commit/fc41d2a600f39256de2b661687850c70d77c77fa))
 
 
 
