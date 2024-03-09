@@ -16,7 +16,8 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          config-file: release-please-config.json
+          path: "src-tauri"
+          release-type: "rust"
 
       - name: Early exit if no release is necessary
         if: ${{ !steps.release.outputs.release_created }}
