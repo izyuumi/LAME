@@ -1,4 +1,4 @@
-# [0.4.0](https://github.com/izyuumi/LAME/compare/v0.3.1...v0.4.0) (2024-03-09)
+# [0.5.0](https://github.com/izyuumi/LAME/compare/v0.3.1...v0.5.0) (2024-03-09)
 
 
 ### Features
