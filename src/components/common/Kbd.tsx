@@ -64,6 +64,8 @@ const keyToString = (key: string) => {
       return "⌥";
     case "mod":
       return "⌘";
+    case "comma":
+      return ",";
     default:
       return key;
   }

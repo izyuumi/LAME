@@ -3,10 +3,11 @@ import { Settings, Vault } from "lucide-react";
 import TitlebarSpace from "@/components/TaskbarSpace";
 import { useRef } from "react";
 import VaultPrompt from "./VaultPrompt";
+import { shortcutKeysToString } from "./common/Kbd";
 
 function Sidebar() {
   const { openSettings } = useSettings();
-  const { setInterfaceContext } = useCmdk();
+  const { setInterfaceContext, findCmdkCommand } = useCmdk();
 
   const vaultPromptRef = useRef<HTMLDialogElement>(null);
 
@@ -30,7 +31,9 @@ function Sidebar() {
           />
           <SidebarItem
             icon={<Settings size={16} />}
-            text="Settings"
+            text={`Settings ${shortcutKeysToString(
+              findCmdkCommand("settings")?.key ?? ""
+            )}`}
             onClick={openSettings}
           />
         </ul>
