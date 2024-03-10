@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { Command as CommandJSX } from "cmdk";
 import { useHotkeys } from "react-hotkeys-hook";
+import Kbd from "@/components/common/Kbd";
 
 /**
  * The interfaces that exist in the application
@@ -179,6 +180,7 @@ const CommandComponent = ({
 
 const CommandKMenu = () => {
   const { cmdkIsOpen, closeCmdk, setCmdkIsOpen, cmdkCommands } = useCmdk();
+
   return (
     <>
       {cmdkIsOpen && (
@@ -210,7 +212,14 @@ const CommandKMenu = () => {
                   }}
                   className="cursor-pointer rounded-md p-2 hover:bg-gray-800 aria-selected:bg-gray-800"
                 >
-                  {command.label}
+                  <div className="flex justify-between items-center">
+                    <p>{command.label}</p>
+                    <div>
+                      {command.key.split("+").map((key) => (
+                        <Kbd key={key} k={key} />
+                      ))}
+                    </div>
+                  </div>
                 </CommandJSX.Item>
               )
           )}
