@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useCmdk, useFiletree, useVault } from "@/hooks";
+import { useFiletree, useVault } from "@/hooks";
 import { open } from "@tauri-apps/api/dialog";
 import { appWindow } from "@tauri-apps/api/window";
 import { useNavigate } from "react-router-dom";
@@ -7,12 +7,10 @@ import { useNavigate } from "react-router-dom";
 export function Onboard() {
   const { closeFiletree } = useFiletree();
   const { openVaultFromPath, currentVaultPath } = useVault();
-  const { setInterfaceContext } = useCmdk();
   const navigate = useNavigate();
 
   useEffect(() => {
     closeFiletree();
-    setInterfaceContext("onboarding");
   }, []);
 
   useEffect(() => {
