@@ -18,7 +18,7 @@ interface ContextMenuProps {
     event: React.MouseEvent<HTMLElement>,
     anchorEl: HTMLElement | null,
     contextChildren: React.ReactNode,
-    options?: ContextMenuOptions,
+    options?: ContextMenuOptions
   ) => void;
   closeContextMenu: () => void;
   contextMenuAnchorEl: HTMLElement | null;
@@ -41,14 +41,14 @@ const ContextMenuProvider = ({ children }: { children: React.ReactNode }) => {
     event: React.MouseEvent<HTMLElement>,
     anchorEl: HTMLElement | null,
     contextChildren?: React.ReactNode,
-    contextMenuOptions?: ContextMenuOptions,
+    contextMenuOptions?: ContextMenuOptions
   ) => {
     event.preventDefault();
     if (anchorEl === null) return;
     setContextMenuAnchorEl(anchorEl);
     setContextMenuChildren(contextChildren);
     setContextMenuIsOpen(true);
-    setContextMenuOptions(contextMenuOptions || {});
+    setContextMenuOptions(contextMenuOptions ?? {});
   };
 
   const closeContextMenu = () => {
@@ -72,7 +72,7 @@ const ContextMenuProvider = ({ children }: { children: React.ReactNode }) => {
       contextMenuAnchorEl,
       contextMenuChildren,
       contextMenuOptions,
-    ],
+    ]
   );
 
   return (
@@ -123,7 +123,7 @@ const ContextMenuWrapper = () => {
   const anchorRect = contextMenuAnchorEl.getBoundingClientRect();
 
   const position = () => {
-    const side = contextMenuOptions.side || "right";
+    const side = contextMenuOptions.side ?? "right";
     switch (side) {
       case "left":
         return {
@@ -138,7 +138,7 @@ const ContextMenuWrapper = () => {
       case "top":
         return {
           left: anchorRect.left,
-          top: anchorRect.top,
+          bottom: anchorRect.top,
         };
       case "bottom":
         return {
