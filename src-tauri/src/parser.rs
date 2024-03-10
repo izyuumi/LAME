@@ -16,7 +16,7 @@ pub fn parse_html_as_markdown(html_string: String, window: tauri::Window) -> Str
                 "Error parsing HTML to Markdown",
                 format!("Error: {:?}.", e),
             );
-            return "".to_string();
+            "".to_string()
         }
     }
 }
