@@ -11,10 +11,11 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
 import { watch } from "tauri-plugin-fs-watch-api";
 import TitlebarSpace from "@/components/TaskbarSpace";
+import { shortcutKeysToString } from "./common/Kbd";
 
 function Filetree() {
   const { currentVaultPath, openPath } = useVault();
-  const { addCmdkCommands } = useCmdk();
+  const { addCmdkCommands, findCmdkCommand } = useCmdk();
 
   const [filetree, setFiletree] = useState<FileEntry[]>([]);
   const filetreeRef = useRef<HTMLUListElement>(null);
@@ -96,15 +97,25 @@ function Filetree() {
   if (!currentVaultPath) return null;
 
   return (
-    <div className="bg-base-300 h-screen overflow-clip">
+    <div className="bg-base-300 h-screen overflow-x-visible">
       <TitlebarSpace />
-      <div className="flex w-full justify-center gap-2 pb-2">
-        <div className="tooltip tooltip-bottom" data-tip="New File">
+      <div className="flex w-full justify-center gap-2 pb-2 relative">
+        <div
+          className="tooltip tooltip-bottom"
+          data-tip={`New File ${shortcutKeysToString(
+            findCmdkCommand("new-file")?.key ?? ""
+          )}`}
+        >
           <button onClick={() => initMakeNewFileOrFolder("file")}>
             <FilePlus size={20} />
           </button>
         </div>
-        <div className="tooltip tooltip-bottom" data-tip="New Folder">
+        <div
+          className="tooltip tooltip-bottom"
+          data-tip={`New Folder ${shortcutKeysToString(
+            findCmdkCommand("new-folder")?.key ?? ""
+          )}`}
+        >
           <button onClick={() => initMakeNewFileOrFolder("folder")}>
             <FolderPlus size={20} />
           </button>

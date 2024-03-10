@@ -43,3 +43,28 @@ const Kbd = ({
 };
 
 export default Kbd;
+
+export const shortcutKeysToString = (key: string) => {
+  return key.split("+").map(keyToString).join("");
+};
+
+const keyToString = (key: string) => {
+  if (key.length === 1) {
+    return key.toUpperCase();
+  }
+  key = key.toLowerCase();
+  switch (key) {
+    case "ctrl":
+      return "^";
+    case "meta":
+      return "⌘";
+    case "shift":
+      return "⇧";
+    case "alt":
+      return "⌥";
+    case "mod":
+      return "⌘";
+    default:
+      return key;
+  }
+};
