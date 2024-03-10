@@ -107,10 +107,6 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
     },
   };
 
-  useEffect(() => {
-    console.log(currentInterface);
-  }, [currentInterface]);
-
   const addCommand = (id: string, command: Command) => {
     setCommands((prevCommands) => ({
       ...prevCommands,
@@ -198,7 +194,7 @@ const CommandKMenu = () => {
         open={cmdkIsOpen}
         onOpenChange={setCmdkIsOpen}
         label="Command Menu"
-        className="fixed left-1/2 top-40 z-50 w-96 max-w-full -translate-x-1/2 transform overflow-hidden rounded-lg bg-black p-2 shadow-lg"
+        className="fixed left-1/2 top-40 z-50 w-96 max-w-full -translate-x-1/2 transform overflow-x-hidden overflow-y-auto bg-black p-2 shadow-lg border-primary border border-solid"
         loop
       >
         <CommandJSX.Input
