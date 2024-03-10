@@ -1,30 +1,56 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { exists, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
+import { z } from "zod";
 
-type ConfigKey = "currentVault" | "vaults";
+const KeymapIdentifierSchema = z.union([
+  z.literal("newFile"),
+  z.literal("newFolder"),
+  z.literal("openSettings"),
+  z.literal("openCmdk"),
+]);
+type KeymapIdentifier = z.infer<typeof KeymapIdentifierSchema>;
 
-type ConfigRecord = {
-  [key in ConfigKey]?: string;
-};
+const ConfigSchema = z.object({
+  currentVault: z.string().optional(),
+  vaults: z.array(z.string()).optional(),
+  keymap: z
+    .object({
+      id: KeymapIdentifierSchema,
+      key: z.string(),
+    })
+    .array()
+    .optional(),
+});
+type Config = z.infer<typeof ConfigSchema>;
 
-const writeConfig = async (currentVault: string, config: ConfigRecord) => {
-  let configFile = "";
-  for (const key in config) {
-    configFile += `${key} ${config[key as ConfigKey]}\n`;
-  }
-  await writeTextFile(`${currentVault}lame.json`, configFile);
+const writeConfig = async (currentVault: string, config: Config) => {
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({
+    queryKey: ["config"],
+  });
+  await writeTextFile(`${currentVault}lame.json`, JSON.stringify(config));
 };
 
 const readConfig = async (currentVault: string) => {
   const configFile = await readTextFile(`${currentVault}lame.json`);
-  let config: ConfigRecord = {};
-
-  for (let line of configFile.split("\n")) {
-    if (!line || line[0] === "#") continue;
-    const [key, value] = line.trim().split(/s+/);
-    if (!key || !value) continue;
+  const config = ConfigSchema.safeParse(JSON.parse(configFile));
+  if (config.success) {
+    return config.data;
   }
+  return undefined;
+};
 
-  return config;
+/**
+ * Hook to read the `lame.json` config file from the current vault
+ *
+ * @param currentVault the path to current vault
+ * @returns config object from the `lame.json` file from the current vault
+ */
+const useConfig = (currentVault: string) => {
+  return useQuery({
+    queryKey: ["config"],
+    queryFn: async () => await readConfig(currentVault),
+  });
 };
 
 /**
@@ -40,5 +66,5 @@ const checkConfigFile = async (path: string): Promise<void> => {
   }
 };
 
-export type { ConfigKey, ConfigRecord };
-export { writeConfig, readConfig, checkConfigFile };
+export type { Config, KeymapIdentifier, ConfigSchema };
+export { writeConfig, useConfig, checkConfigFile };

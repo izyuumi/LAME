@@ -3,6 +3,7 @@ import { useRecordHotkeys } from "react-hotkeys-hook";
 import Kbd from "@/components/common/Kbd";
 import { useEffect } from "react";
 import { Disc } from "lucide-react";
+import { KeymapIdentifier } from "@/utils/config";
 
 function SettingsShortcuts() {
   const { cmdkCommands } = useCmdk();
@@ -11,7 +12,11 @@ function SettingsShortcuts() {
     <ul>
       <h2 className="text-lg py-2 font-semibold">Shortcuts</h2>
       {Object.entries(cmdkCommands).map(([id, command]) => (
-        <SettingsShortcutsItem key={id} id={id} command={command} />
+        <SettingsShortcutsItem
+          key={id}
+          id={id as KeymapIdentifier}
+          command={command}
+        />
       ))}
     </ul>
   );
@@ -23,7 +28,7 @@ const SettingsShortcutsItem = ({
   id,
   command,
 }: {
-  id: string;
+  id: KeymapIdentifier;
   command: Command;
 }) => {
   const [keys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();

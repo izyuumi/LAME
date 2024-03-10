@@ -31,7 +31,7 @@ const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const close = () => settingsRef.current?.close();
 
   useEffect(() => {
-    addCmdkCommand("settings", {
+    addCmdkCommand("openSettings", {
       label: "Settings",
       key: "Mod+comma",
       disabledOn: ["settings"],

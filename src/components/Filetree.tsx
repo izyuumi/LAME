@@ -15,7 +15,7 @@ import { shortcutKeysToString } from "./common/Kbd";
 
 function Filetree() {
   const { currentVaultPath, openPath } = useVault();
-  const { addCmdkCommands, findCmdkCommand } = useCmdk();
+  const { addCmdkCommand, findCmdkCommand } = useCmdk();
 
   const [filetree, setFiletree] = useState<FileEntry[]>([]);
   const filetreeRef = useRef<HTMLUListElement>(null);
@@ -30,17 +30,15 @@ function Filetree() {
   };
 
   useEffect(() => {
-    addCmdkCommands({
-      "new-file": {
-        label: "New File",
-        key: "Mod+n",
-        action: async () => await initMakeNewFileOrFolder("file"),
-      },
-      "new-folder": {
-        label: "New Folder",
-        key: "Mod+Shift+n",
-        action: async () => await initMakeNewFileOrFolder("folder"),
-      },
+    addCmdkCommand("newFile", {
+      label: "New File",
+      key: "Mod+n",
+      action: async () => await initMakeNewFileOrFolder("file"),
+    });
+    addCmdkCommand("newFolder", {
+      label: "New Folder",
+      key: "Mod+Shift+n",
+      action: async () => await initMakeNewFileOrFolder("folder"),
     });
   }, []);
 
@@ -103,7 +101,7 @@ function Filetree() {
         <div
           className="tooltip tooltip-bottom"
           data-tip={`New File ${shortcutKeysToString(
-            findCmdkCommand("new-file")?.key ?? ""
+            findCmdkCommand("newFile")?.key ?? ""
           )}`}
         >
           <button onClick={() => initMakeNewFileOrFolder("file")}>
@@ -113,7 +111,7 @@ function Filetree() {
         <div
           className="tooltip tooltip-bottom"
           data-tip={`New Folder ${shortcutKeysToString(
-            findCmdkCommand("new-folder")?.key ?? ""
+            findCmdkCommand("newFolder")?.key ?? ""
           )}`}
         >
           <button onClick={() => initMakeNewFileOrFolder("folder")}>
