@@ -5,11 +5,73 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Command } from "cmdk";
-import { useVault } from "./useVault";
+import { Command as CommandJSX } from "cmdk";
+import { useHotkeys } from "react-hotkeys-hook";
 
-interface Command {
+/**
+ * The interfaces that exist in the application
+ * Used to determine the commands that could be involked at a given moment
+ *
+ * @see useCmdk
+ */
+type InterfaceContext =
+  | "cmdk"
+  | "settings"
+  | "filetree"
+  | "vault-prompt"
+  | "editor"
+  | "onboarding";
+
+/**
+ * The command to be registered in the command menu
+ * @see useCmdk
+ */
+export interface Command {
+  /**
+   * The label to display in the command menu
+   * @example "New File"
+   */
   label: string;
+  /**
+   * The key default combination to invoke the command
+   * @example "Mod+k"
+   */
+  key: string;
+  /**
+   * Whether the command is disabled
+   *
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * Contexts in which the command is enabled
+   * It is overridden by `disabledOn`
+   *
+   * @default undefined
+   * @example ["cmdk", "editor"]
+   *
+   * @type {InterfaceContext[]}
+   */
+  enableOn?: InterfaceContext[];
+  /**
+   * Contexts in which the command is disabled
+   * It overrides `enableOn`
+   *
+   * @default undefined
+   * @example ["filetree", "settings"]
+   *
+   * @type {InterfaceContext[]}
+   */
+  disabledOn?: InterfaceContext[];
+  /**
+   * Whether to hide the command from the command menu
+   *
+   * @default false
+   */
+  hideOnCommandMenu?: boolean;
+  /**
+   * The action to be performed when the command is invoked
+   */
   action: () => void;
 }
 
@@ -21,6 +83,9 @@ interface CmdkContextType {
   cmdkCommands: Record<string, Command>;
   addCmdkCommand: (id: string, command: Command) => void;
   addCmdkCommands: (commands: Record<string, Command>) => void;
+  findCmdkCommand: (id: string) => Command | undefined;
+  interfaceContext: InterfaceContext;
+  setInterfaceContext: (context: InterfaceContext) => void;
 }
 
 const CmdkContext = createContext<CmdkContextType | null>(null);
@@ -28,23 +93,15 @@ const CmdkContext = createContext<CmdkContextType | null>(null);
 const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [commands, setCommands] = useState<Record<string, Command>>({});
+  const [currentInterface, setCurrentInterface] =
+    useState<InterfaceContext>("filetree");
 
-  const { currentVaultPath } = useVault();
-
-  const keydown = (e: KeyboardEvent) => {
-    if (!currentVaultPath) return;
-    if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-      e.preventDefault();
-      setIsOpen(true);
-    } else if (e.key === "Escape") {
-      setIsOpen(false);
-    }
+  const cmdkOpenCommand: Command = {
+    key: "Mod+k",
+    label: "Open Command Menu",
+    hideOnCommandMenu: true,
+    action: () => setIsOpen(true),
   };
-
-  useEffect(() => {
-    document.addEventListener("keydown", keydown);
-    return () => document.removeEventListener("keydown", keydown);
-  }, [currentVaultPath]);
 
   const addCommand = (id: string, command: Command) => {
     setCommands((prevCommands) => ({
@@ -54,11 +111,16 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addCommands = (commands: Record<string, Command>) => {
-    setCommands((prevCommands) => ({
-      ...prevCommands,
-      ...commands,
-    }));
+    Object.entries(commands).forEach(([id, command]) => {
+      addCommand(id, command);
+    });
   };
+
+  const findCommand = (id: string) => commands[id];
+
+  useEffect(() => {
+    addCommands({ cmdkOpenCommand });
+  }, []);
 
   const value: CmdkContextType = useMemo(
     () => ({
@@ -69,16 +131,50 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
       cmdkCommands: commands,
       addCmdkCommand: addCommand,
       addCmdkCommands: addCommands,
+      interfaceContext: currentInterface,
+      setInterfaceContext: setCurrentInterface,
+      findCmdkCommand: findCommand,
     }),
-    [isOpen, commands],
+    [isOpen, commands, currentInterface]
   );
 
   return (
     <CmdkContext.Provider value={value}>
       {children}
       <CommandKMenu />
+      {Object.entries(commands).map(([id, command]) => (
+        <CommandComponent
+          key={id}
+          command={command}
+          currentInterface={currentInterface}
+        />
+      ))}
     </CmdkContext.Provider>
   );
+};
+
+const CommandComponent = ({
+  command,
+  currentInterface,
+}: {
+  command: Command;
+  currentInterface: InterfaceContext;
+}) => {
+  useHotkeys(
+    command.key,
+    () => {
+      if (command.disabled) return;
+      if (command.disabledOn?.includes(currentInterface)) return;
+      if (command.enableOn && !command.enableOn.includes(currentInterface))
+        return;
+      command.action();
+    },
+    {
+      preventDefault: true,
+    },
+    [command]
+  );
+  return null;
 };
 
 const CommandKMenu = () => {
@@ -88,35 +184,38 @@ const CommandKMenu = () => {
       {cmdkIsOpen && (
         <div className="fixed inset-0 z-40 bg-black bg-opacity-30" />
       )}
-      <Command.Dialog
+      <CommandJSX.Dialog
         open={cmdkIsOpen}
         onOpenChange={setCmdkIsOpen}
         label="Command Menu"
         className="fixed left-1/2 top-40 z-50 w-96 max-w-full -translate-x-1/2 transform overflow-hidden rounded-lg bg-black p-2 shadow-lg"
         loop
       >
-        <Command.Input
+        <CommandJSX.Input
           placeholder="Search for a command..."
           className="mb-2 w-full bg-transparent p-2 focus:outline-none"
         />
-        <Command.List>
-          <Command.Empty className="p-2">No results found.</Command.Empty>
-          {Object.entries(cmdkCommands).map(([id, command]) => (
-            <Command.Item
-              key={id}
-              onSelect={() => {
-                closeCmdk();
-                setTimeout(() => {
-                  command.action();
-                }, 50);
-              }}
-              className="cursor-pointer rounded-md p-2 hover:bg-gray-800 aria-selected:bg-gray-800"
-            >
-              {command.label}
-            </Command.Item>
-          ))}
-        </Command.List>
-      </Command.Dialog>
+        <CommandJSX.List>
+          <CommandJSX.Empty className="p-2">No results found.</CommandJSX.Empty>
+          {Object.entries(cmdkCommands).map(
+            ([id, command]) =>
+              !command.hideOnCommandMenu && (
+                <CommandJSX.Item
+                  key={id}
+                  onSelect={() => {
+                    closeCmdk();
+                    setTimeout(() => {
+                      command.action();
+                    }, 50);
+                  }}
+                  className="cursor-pointer rounded-md p-2 hover:bg-gray-800 aria-selected:bg-gray-800"
+                >
+                  {command.label}
+                </CommandJSX.Item>
+              )
+          )}
+        </CommandJSX.List>
+      </CommandJSX.Dialog>
     </>
   );
 };

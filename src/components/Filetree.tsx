@@ -14,7 +14,7 @@ import TitlebarSpace from "@/components/TaskbarSpace";
 
 function Filetree() {
   const { currentVaultPath, openPath } = useVault();
-  const { addCmdkCommand } = useCmdk();
+  const { addCmdkCommands } = useCmdk();
 
   const [filetree, setFiletree] = useState<FileEntry[]>([]);
   const filetreeRef = useRef<HTMLUListElement>(null);
@@ -29,13 +29,17 @@ function Filetree() {
   };
 
   useEffect(() => {
-    addCmdkCommand("new-file", {
-      label: "New File",
-      action: () => initMakeNewFileOrFolder("file"),
-    });
-    addCmdkCommand("new-folder", {
-      label: "New Folder",
-      action: () => initMakeNewFileOrFolder("folder"),
+    addCmdkCommands({
+      "new-file": {
+        label: "New File",
+        key: "Mod+n",
+        action: async () => await initMakeNewFileOrFolder("file"),
+      },
+      "new-folder": {
+        label: "New Folder",
+        key: "Mod+Shift+n",
+        action: async () => await initMakeNewFileOrFolder("folder"),
+      },
     });
   }, []);
 
@@ -109,7 +113,7 @@ function Filetree() {
       <ul
         ref={filetreeRef}
         className={tm(
-          "bg-base-300 flex select-none flex-col items-start justify-start p-1",
+          "bg-base-300 flex select-none flex-col items-start justify-start p-1"
         )}
       >
         {filetree.map(
@@ -121,7 +125,7 @@ function Filetree() {
                 {...file}
                 updateFiletree={() => setFiletreeIsChanged(true)}
               />
-            ),
+            )
         )}
         {showFileInput && (
           <FiletreeInput
@@ -133,7 +137,7 @@ function Filetree() {
                 currentVaultPath,
                 fileOrFolder,
                 () => getDirectoryContents(currentVaultPath),
-                openPath,
+                openPath
               )
             }
           />
@@ -213,7 +217,7 @@ const FiletreeItem = ({
         className={tm(
           "flex w-full items-center overflow-hidden text-ellipsis whitespace-nowrap",
           openedPath === path && "text-blue-400",
-          !isDirectory && "ml-3",
+          !isDirectory && "ml-3"
         )}
       >
         {isDirectory &&
@@ -236,7 +240,7 @@ const FiletreeItem = ({
                   path,
                   fileOrFolder,
                   updateFiletree,
-                  openPath,
+                  openPath
                 )
               }
             />
@@ -247,7 +251,7 @@ const FiletreeItem = ({
                 <span key={child.path} className={isOpen ? "" : "hidden"}>
                   <FiletreeItem {...child} updateFiletree={updateFiletree} />
                 </span>
-              ),
+              )
           )}
         </ul>
       )}
@@ -260,7 +264,7 @@ const makeNewFileOrFolder = async (
   path: string,
   fileOrFolder: "file" | "folder",
   updateFiletree: () => void,
-  openPath: (path: string) => void,
+  openPath: (path: string) => void
 ) => {
   const newPath = `${path}/${newName}`;
   const fileAlreadyExists = await exists(newPath);

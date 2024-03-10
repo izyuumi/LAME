@@ -15,18 +15,18 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <FiletreeProvider>
-        <SettingsProvider>
-          <VaultProvider>
-            <CmdkProvider>
+    <CmdkProvider>
+      <QueryClientProvider client={queryClient}>
+        <FiletreeProvider>
+          <SettingsProvider>
+            <VaultProvider>
               <ContextMenuProvider>
                 <App />
               </ContextMenuProvider>
-            </CmdkProvider>
-          </VaultProvider>
-        </SettingsProvider>
-      </FiletreeProvider>
-    </QueryClientProvider>
+            </VaultProvider>
+          </SettingsProvider>
+        </FiletreeProvider>
+      </QueryClientProvider>
+    </CmdkProvider>
   </React.StrictMode>,
 );

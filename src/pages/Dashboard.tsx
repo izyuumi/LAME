@@ -1,7 +1,7 @@
 import "@/components/editor/tiptap.scss";
 
 import TitlebarSpace from "@/components/TaskbarSpace";
-import { useVault } from "@/hooks";
+import { useCmdk, useVault } from "@/hooks";
 import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -15,6 +15,7 @@ import MenuBar from "@/components/editor/MenuBar";
 export function Dashboard() {
   const navigate = useNavigate();
   const { currentVaultPath, openedPath } = useVault();
+  const { setInterfaceContext } = useCmdk();
 
   const editor = useEditor({
     extensions: [StarterKit, Underline],
@@ -26,6 +27,7 @@ export function Dashboard() {
         await writeTextFile(openedPath, md);
       }
     },
+    onFocus: () => setInterfaceContext("editor"),
   });
 
   useEffect(() => {
