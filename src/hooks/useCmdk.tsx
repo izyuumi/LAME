@@ -101,8 +101,15 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
     key: "Mod+k",
     label: "Open Command Menu",
     hideOnCommandMenu: true,
-    action: () => setIsOpen(true),
+    action: () => {
+      setIsOpen(true);
+      setCurrentInterface("cmdk");
+    },
   };
+
+  useEffect(() => {
+    console.log(currentInterface);
+  }, [currentInterface]);
 
   const addCommand = (id: string, command: Command) => {
     setCommands((prevCommands) => ({

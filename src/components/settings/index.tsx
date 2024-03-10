@@ -1,6 +1,6 @@
-import { useSettings } from "@/hooks";
+import { useCmdk, useSettings } from "@/hooks";
 import SettingsShortcuts from "./SettingsShortcuts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SettingsGeneral from "./SettingsGeneral";
 import { twMerge } from "tailwind-merge";
 
@@ -15,6 +15,11 @@ const settingsPages: SettingsPage = {
 
 function Settings() {
   const { settingsRef } = useSettings();
+  const { setInterfaceContext } = useCmdk();
+
+  useEffect(() => {
+    setInterfaceContext("settings");
+  }, []);
 
   const [currentPage, setCurrentPage] =
     useState<keyof typeof settingsPages>("general");

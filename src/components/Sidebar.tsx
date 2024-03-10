@@ -1,4 +1,4 @@
-import { useSettings } from "@/hooks";
+import { useCmdk, useSettings } from "@/hooks";
 import { Settings, Vault } from "lucide-react";
 import TitlebarSpace from "@/components/TaskbarSpace";
 import { useRef } from "react";
@@ -6,6 +6,7 @@ import VaultPrompt from "./VaultPrompt";
 
 function Sidebar() {
   const { openSettings } = useSettings();
+  const { setInterfaceContext } = useCmdk();
 
   const vaultPromptRef = useRef<HTMLDialogElement>(null);
 
@@ -20,8 +21,9 @@ function Sidebar() {
             text="Vault"
             onClick={() => {
               vaultPromptRef.current?.showModal();
-              let firstFocusable = vaultPromptRef.current?.querySelector(
-                "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+              setInterfaceContext("vault-prompt");
+              const firstFocusable = vaultPromptRef.current?.querySelector(
+                "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
               ) as HTMLElement;
               firstFocusable?.blur();
             }}
