@@ -56,21 +56,26 @@ const SettingsShortcutsItem = ({
           </div>
         )}
       </div>
-      <button
-        onClick={() => {
-          if (isRecording) {
-            stop();
-          } else {
-            start();
-          }
-        }}
+      <div
+        className="tooltip tooltip-left"
+        data-tip="Click to customize shortcut"
       >
-        {isRecording
-          ? Array.from(keys).map(
-              (key) => key !== "escape" && <Kbd key={key} k={key} />
-            )
-          : command.key.split("+").map((key) => <Kbd key={key} k={key} />)}
-      </button>
+        <button
+          onClick={() => {
+            if (isRecording) {
+              stop();
+            } else {
+              start();
+            }
+          }}
+        >
+          {isRecording
+            ? Array.from(keys).map(
+                (key) => key !== "escape" && <Kbd key={key} k={key} />
+              )
+            : command.key.split("+").map((key) => <Kbd key={key} k={key} />)}
+        </button>
+      </div>
     </li>
   );
 };
