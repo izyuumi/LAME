@@ -34,6 +34,10 @@ jobs:
           version-file: src-tauri/tauri.conf.json
           version-path: package.version
 
+      - name: Get the latest commit SHA
+        id: commit
+        run: echo "name=sha::$(git rev-parse HEAD)" >> $GITHUB_ENV
+
       - name: Create Release
         id: release
         uses: ncipollo/release-action@v1
@@ -47,6 +51,7 @@ jobs:
 
     outputs:
       releaseId: ${{ steps.release.outputs.id }}
+      commitSha: ${{ steps.commit.outputs.sha }}
 
   publish-tauri:
     needs: create-release
@@ -61,6 +66,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.create-release.outputs.commitSha }}
 
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
