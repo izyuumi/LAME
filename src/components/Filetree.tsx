@@ -320,6 +320,7 @@ const FiletreeInput = (props: FiletreeInputProps) => {
 
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if (ev.key === "Enter") handleBlur();
+    if (ev.key === "Escape") onCanceled();
   };
 
   return (
