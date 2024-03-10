@@ -1,9 +1,9 @@
-import { type Command, useCmdk } from "@/hooks";
+import { type Command, useCmdk, useConfig } from "@/hooks";
 import { useRecordHotkeys } from "react-hotkeys-hook";
 import Kbd from "@/components/common/Kbd";
 import { useEffect } from "react";
 import { Disc } from "lucide-react";
-import { KeymapIdentifier } from "@/utils/config";
+import { KeymapIdentifier } from "@/hooks";
 
 function SettingsShortcuts() {
   const { cmdkCommands } = useCmdk();
@@ -33,6 +33,12 @@ const SettingsShortcutsItem = ({
 }) => {
   const [keys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();
   const { addCmdkCommand } = useCmdk();
+  const { updateConfig } = useConfig();
+
+  const update = async () => {
+    await updateConfig(`keymaps.${id}`, Array.from(keys).join("+"));
+    addCmdkCommand(id, { ...command, key: Array.from(keys).join("+") });
+  };
 
   useEffect(() => {
     if (keys.has("escape")) {
@@ -41,12 +47,15 @@ const SettingsShortcutsItem = ({
       return;
     }
     if (
-      keys.size > 0 &&
-      !Array.from(keys).every((key) => modifiers.includes(key))
+      !(
+        keys.size > 0 &&
+        !Array.from(keys).every((key) => modifiers.includes(key))
+      )
     ) {
-      stop();
-      addCmdkCommand(id, { ...command, key: Array.from(keys).join("+") });
+      return;
     }
+    stop();
+    update();
   }, [keys]);
 
   return (

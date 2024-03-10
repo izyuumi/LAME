@@ -43,9 +43,17 @@ function Filetree() {
   }, []);
 
   const watchForFileChanges = async (path: string) => {
-    await watch([path], async () => await getDirectoryContents(path), {
-      recursive: true,
-    });
+    await watch(
+      [path],
+      () => {
+        (async () => {
+          return await getDirectoryContents(path);
+        })();
+      },
+      {
+        recursive: true,
+      }
+    );
   };
 
   const sortName = (a: FileEntry, b: FileEntry) => {
@@ -145,7 +153,7 @@ function Filetree() {
                 newPath,
                 currentVaultPath,
                 fileOrFolder,
-                () => getDirectoryContents(currentVaultPath),
+                async () => await getDirectoryContents(currentVaultPath),
                 openPath
               )
             }
@@ -184,32 +192,16 @@ const FiletreeItem = ({
     setShowNewFileInput(true);
   };
 
-  const FiletreeDirectoryContextMenu = () => (
-    <>
-      <ContextMenuItem onClick={() => initMakeNewFileOrFolder("file")}>
-        New File
-      </ContextMenuItem>
-      <ContextMenuItem onClick={() => initMakeNewFileOrFolder("folder")}>
-        New Folder
-      </ContextMenuItem>
-    </>
-  );
-
   const directoryContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    openContextMenu(event, itemRef.current, <FiletreeDirectoryContextMenu />);
+    openContextMenu(
+      event,
+      itemRef.current,
+      <FiletreeDirectoryContextMenu
+        initMakeNewFileOrFolder={initMakeNewFileOrFolder}
+      />
+    );
   };
-
-  const FiletreeItemContextMenu = () => (
-    <>
-      <ContextMenuItem onClick={() => console.log("Rename")}>
-        Rename
-      </ContextMenuItem>
-      <ContextMenuItem onClick={() => console.log("Delete")}>
-        Delete
-      </ContextMenuItem>
-    </>
-  );
 
   const fileContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -268,11 +260,37 @@ const FiletreeItem = ({
   );
 };
 
+const FiletreeDirectoryContextMenu = ({
+  initMakeNewFileOrFolder,
+}: {
+  initMakeNewFileOrFolder: (fileOrFolder: "file" | "folder") => void;
+}) => (
+  <>
+    <ContextMenuItem onClick={() => initMakeNewFileOrFolder("file")}>
+      New File
+    </ContextMenuItem>
+    <ContextMenuItem onClick={() => initMakeNewFileOrFolder("folder")}>
+      New Folder
+    </ContextMenuItem>
+  </>
+);
+
+const FiletreeItemContextMenu = () => (
+  <>
+    <ContextMenuItem onClick={() => console.log("Rename")}>
+      Rename
+    </ContextMenuItem>
+    <ContextMenuItem onClick={() => console.log("Delete")}>
+      Delete
+    </ContextMenuItem>
+  </>
+);
+
 const makeNewFileOrFolder = async (
   newName: string,
   path: string,
   fileOrFolder: "file" | "folder",
-  updateFiletree: () => void,
+  updateFiletree: () => void | Promise<void>,
   openPath: (path: string) => void
 ) => {
   const newPath = `${path}/${newName}`;

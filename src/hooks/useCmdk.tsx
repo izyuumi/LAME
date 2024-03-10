@@ -8,7 +8,7 @@ import React, {
 import { Command as CommandJSX } from "cmdk";
 import { useHotkeys } from "react-hotkeys-hook";
 import Kbd from "@/components/common/Kbd";
-import { KeymapIdentifier } from "@/utils/config";
+import { KeymapIdentifier } from "@/hooks";
 
 /**
  * The interfaces that exist in the application
@@ -74,7 +74,7 @@ export interface Command {
   /**
    * The action to be performed when the command is invoked
    */
-  action: () => void;
+  action: () => void | Promise<void>;
 }
 
 interface CmdkContextType {
@@ -85,6 +85,7 @@ interface CmdkContextType {
   cmdkCommands: Record<KeymapIdentifier, Command>;
   addCmdkCommand: (id: KeymapIdentifier, command: Command) => void;
   findCmdkCommand: (id: KeymapIdentifier) => Command | undefined;
+  updateCmdkCommandShortcut: (id: KeymapIdentifier, key: string) => void;
   interfaceContext: InterfaceContext;
   setInterfaceContext: (context: InterfaceContext) => void;
 }
@@ -116,6 +117,15 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
 
   const findCommand = (id: string) => commands[id];
 
+  const updateCmdkCommandShortcut = (id: KeymapIdentifier, key: string) =>
+    setCommands((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        key,
+      },
+    }));
+
   useEffect(() => {
     addCommand("cmdk", openCmdk);
   }, []);
@@ -128,9 +138,10 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
       setCmdkIsOpen: (isOpen: boolean) => setIsOpen(isOpen),
       cmdkCommands: commands,
       addCmdkCommand: addCommand,
+      updateCmdkCommandShortcut,
+      findCmdkCommand: findCommand,
       interfaceContext: currentInterface,
       setInterfaceContext: setCurrentInterface,
-      findCmdkCommand: findCommand,
     }),
     [isOpen, commands, currentInterface]
   );
