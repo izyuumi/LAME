@@ -32,7 +32,7 @@ function Sidebar() {
           <SidebarItem
             icon={<Settings size={16} />}
             text={`Settings ${shortcutKeysToString(
-              findCmdkCommand("settings")?.key ?? ""
+              findCmdkCommand("openSettings")?.key ?? ""
             )}`}
             onClick={openSettings}
           />
