@@ -1,3 +1,12 @@
+# [0.8.0](https://github.com/izyuumi/LAME/compare/v0.7.0...v0.8.0) (2024-03-10)
+
+
+### Features
+
+* add step to get latest commit SHA in build workflow ([375ffa9](https://github.com/izyuumi/LAME/commit/375ffa9a6e3a5192e12b0c39d9a70479b5b0c6e8))
+
+
+
 # [0.7.0](https://github.com/izyuumi/LAME/compare/v0.6.0...v0.7.0) (2024-03-10)
 
 
@@ -67,15 +76,6 @@
 ### Features
 
 * **parser:** emit errors when parser return errors ([730c7ff](https://github.com/izyuumi/LAME/commit/730c7fffed3c91b890aa21cef85b50b195a34cfd))
-
-
-
-## [0.3.1](https://github.com/izyuumi/LAME/compare/v0.3.0...v0.3.1) (2024-03-06)
-
-
-### Bug Fixes
-
-* **ci:** mark release as latest after app builiding ([c68bf1e](https://github.com/izyuumi/LAME/commit/c68bf1e66047799844e40aef673390224453ccc9))
 
 
 
