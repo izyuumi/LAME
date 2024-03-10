@@ -130,7 +130,7 @@ function Filetree() {
         {filetree.map(
           (file) =>
             !file.name?.startsWith(".") &&
-            file.name !== "conf.lame" && (
+            file.name !== "lame.json" && (
               <FiletreeItem
                 key={file.path}
                 {...file}
