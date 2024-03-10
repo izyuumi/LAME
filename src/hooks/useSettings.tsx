@@ -2,11 +2,9 @@ import React, {
   RefObject,
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
-import { useCmdk } from "@/hooks";
 
 interface SettingsContext {
   settingsRef: RefObject<HTMLDialogElement>;
@@ -18,26 +16,14 @@ const SettingsContext = createContext<SettingsContext | null>(null);
 
 const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const settingsRef = useRef<HTMLDialogElement>(null);
-  const { addCmdkCommand, setInterfaceContext } = useCmdk();
-
   const open = () => {
     settingsRef.current?.showModal();
-    setInterfaceContext("settings");
-    const firstFocusable = settingsRef.current?.querySelector(
-      "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+    let firstFocusable = settingsRef.current?.querySelector(
+      "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
     ) as HTMLElement;
     firstFocusable?.blur();
   };
   const close = () => settingsRef.current?.close();
-
-  useEffect(() => {
-    addCmdkCommand("openSettings", {
-      label: "Settings",
-      key: "Mod+comma",
-      disabledOn: ["settings"],
-      action: open,
-    });
-  }, []);
 
   const value = useMemo(
     () => ({
@@ -45,7 +31,7 @@ const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
       openSettings: open,
       closeSettings: close,
     }),
-    [settingsRef]
+    [settingsRef],
   );
 
   return (
