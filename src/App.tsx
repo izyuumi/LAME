@@ -46,7 +46,7 @@ function App() {
       >
         <Filetree />
       </Panel>
-      <PanelResizeHandle className="w-1 bg-black" />
+      <PanelResizeHandle className="w-1 bg-black focus:outline-none focus:bg-blue-500" />
       <Panel>
         <RouterProvider router={router} />
       </Panel>

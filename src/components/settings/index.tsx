@@ -1,7 +1,8 @@
-import { useSettings } from "@/hooks";
+import { useCmdk, useSettings } from "@/hooks";
 import SettingsShortcuts from "./SettingsShortcuts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SettingsGeneral from "./SettingsGeneral";
+import { twMerge } from "tailwind-merge";
 
 interface SettingsPage {
   [key: string]: React.ReactNode;
@@ -14,6 +15,11 @@ const settingsPages: SettingsPage = {
 
 function Settings() {
   const { settingsRef } = useSettings();
+  const { setInterfaceContext } = useCmdk();
+
+  useEffect(() => {
+    setInterfaceContext("settings");
+  }, []);
 
   const [currentPage, setCurrentPage] =
     useState<keyof typeof settingsPages>("general");
@@ -25,7 +31,10 @@ function Settings() {
           {Object.keys(settingsPages).map((page) => (
             <li key={page} className="w-full">
               <button
-                className="btn btn-ghost h-full w-full rounded-md"
+                className={twMerge(
+                  "btn btn-ghost h-full w-full rounded-md",
+                  currentPage === page && "btn-active"
+                )}
                 onClick={() =>
                   setCurrentPage(page as keyof typeof settingsPages)
                 }
@@ -40,6 +49,9 @@ function Settings() {
           {settingsPages[currentPage]}
         </div>
       </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close settings modal</button>
+      </form>
     </dialog>
   );
 }

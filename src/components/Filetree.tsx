@@ -11,10 +11,11 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 import { twMerge as tm } from "tailwind-merge";
 import { watch } from "tauri-plugin-fs-watch-api";
 import TitlebarSpace from "@/components/TaskbarSpace";
+import { shortcutKeysToString } from "./common/Kbd";
 
 function Filetree() {
   const { currentVaultPath, openPath } = useVault();
-  const { addCmdkCommand } = useCmdk();
+  const { addCmdkCommand, findCmdkCommand } = useCmdk();
 
   const [filetree, setFiletree] = useState<FileEntry[]>([]);
   const filetreeRef = useRef<HTMLUListElement>(null);
@@ -29,20 +30,30 @@ function Filetree() {
   };
 
   useEffect(() => {
-    addCmdkCommand("new-file", {
+    addCmdkCommand("newFile", {
       label: "New File",
-      action: () => initMakeNewFileOrFolder("file"),
+      key: "Mod+n",
+      action: async () => await initMakeNewFileOrFolder("file"),
     });
-    addCmdkCommand("new-folder", {
+    addCmdkCommand("newFolder", {
       label: "New Folder",
-      action: () => initMakeNewFileOrFolder("folder"),
+      key: "Mod+Shift+n",
+      action: async () => await initMakeNewFileOrFolder("folder"),
     });
   }, []);
 
   const watchForFileChanges = async (path: string) => {
-    await watch([path], async () => await getDirectoryContents(path), {
-      recursive: true,
-    });
+    await watch(
+      [path],
+      () => {
+        (async () => {
+          return await getDirectoryContents(path);
+        })();
+      },
+      {
+        recursive: true,
+      }
+    );
   };
 
   const sortName = (a: FileEntry, b: FileEntry) => {
@@ -92,15 +103,25 @@ function Filetree() {
   if (!currentVaultPath) return null;
 
   return (
-    <div className="bg-base-300 h-screen">
+    <div className="bg-base-300 h-screen overflow-x-visible">
       <TitlebarSpace />
-      <div className="flex w-full justify-center gap-2">
-        <div className="tooltip tooltip-bottom" data-tip="New File">
+      <div className="flex w-full justify-center gap-2 pb-2 relative">
+        <div
+          className="tooltip tooltip-bottom"
+          data-tip={`New File ${shortcutKeysToString(
+            findCmdkCommand("newFile")?.key ?? ""
+          )}`}
+        >
           <button onClick={() => initMakeNewFileOrFolder("file")}>
             <FilePlus size={20} />
           </button>
         </div>
-        <div className="tooltip tooltip-bottom" data-tip="New Folder">
+        <div
+          className="tooltip tooltip-bottom"
+          data-tip={`New Folder ${shortcutKeysToString(
+            findCmdkCommand("newFolder")?.key ?? ""
+          )}`}
+        >
           <button onClick={() => initMakeNewFileOrFolder("folder")}>
             <FolderPlus size={20} />
           </button>
@@ -109,19 +130,19 @@ function Filetree() {
       <ul
         ref={filetreeRef}
         className={tm(
-          "bg-base-300 flex select-none flex-col items-start justify-start p-1",
+          "bg-base-300 flex select-none flex-col items-start justify-start p-1 max-h-full overflow-y-auto overflow-x-hidden"
         )}
       >
         {filetree.map(
           (file) =>
             !file.name?.startsWith(".") &&
-            file.name !== "conf.lame" && (
+            file.name !== "lame.json" && (
               <FiletreeItem
                 key={file.path}
                 {...file}
                 updateFiletree={() => setFiletreeIsChanged(true)}
               />
-            ),
+            )
         )}
         {showFileInput && (
           <FiletreeInput
@@ -132,8 +153,8 @@ function Filetree() {
                 newPath,
                 currentVaultPath,
                 fileOrFolder,
-                () => getDirectoryContents(currentVaultPath),
-                openPath,
+                async () => await getDirectoryContents(currentVaultPath),
+                openPath
               )
             }
           />
@@ -171,32 +192,16 @@ const FiletreeItem = ({
     setShowNewFileInput(true);
   };
 
-  const FiletreeDirectoryContextMenu = () => (
-    <>
-      <ContextMenuItem onClick={() => initMakeNewFileOrFolder("file")}>
-        New File
-      </ContextMenuItem>
-      <ContextMenuItem onClick={() => initMakeNewFileOrFolder("folder")}>
-        New Folder
-      </ContextMenuItem>
-    </>
-  );
-
   const directoryContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    openContextMenu(event, itemRef.current, <FiletreeDirectoryContextMenu />);
+    openContextMenu(
+      event,
+      itemRef.current,
+      <FiletreeDirectoryContextMenu
+        initMakeNewFileOrFolder={initMakeNewFileOrFolder}
+      />
+    );
   };
-
-  const FiletreeItemContextMenu = () => (
-    <>
-      <ContextMenuItem onClick={() => console.log("Rename")}>
-        Rename
-      </ContextMenuItem>
-      <ContextMenuItem onClick={() => console.log("Delete")}>
-        Delete
-      </ContextMenuItem>
-    </>
-  );
 
   const fileContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -213,7 +218,7 @@ const FiletreeItem = ({
         className={tm(
           "flex w-full items-center overflow-hidden text-ellipsis whitespace-nowrap",
           openedPath === path && "text-blue-400",
-          !isDirectory && "ml-3",
+          !isDirectory && "ml-3"
         )}
       >
         {isDirectory &&
@@ -236,7 +241,7 @@ const FiletreeItem = ({
                   path,
                   fileOrFolder,
                   updateFiletree,
-                  openPath,
+                  openPath
                 )
               }
             />
@@ -247,7 +252,7 @@ const FiletreeItem = ({
                 <span key={child.path} className={isOpen ? "" : "hidden"}>
                   <FiletreeItem {...child} updateFiletree={updateFiletree} />
                 </span>
-              ),
+              )
           )}
         </ul>
       )}
@@ -255,12 +260,38 @@ const FiletreeItem = ({
   );
 };
 
+const FiletreeDirectoryContextMenu = ({
+  initMakeNewFileOrFolder,
+}: {
+  initMakeNewFileOrFolder: (fileOrFolder: "file" | "folder") => void;
+}) => (
+  <>
+    <ContextMenuItem onClick={() => initMakeNewFileOrFolder("file")}>
+      New File
+    </ContextMenuItem>
+    <ContextMenuItem onClick={() => initMakeNewFileOrFolder("folder")}>
+      New Folder
+    </ContextMenuItem>
+  </>
+);
+
+const FiletreeItemContextMenu = () => (
+  <>
+    <ContextMenuItem onClick={() => console.log("Rename")}>
+      Rename
+    </ContextMenuItem>
+    <ContextMenuItem onClick={() => console.log("Delete")}>
+      Delete
+    </ContextMenuItem>
+  </>
+);
+
 const makeNewFileOrFolder = async (
   newName: string,
   path: string,
   fileOrFolder: "file" | "folder",
-  updateFiletree: () => void,
-  openPath: (path: string) => void,
+  updateFiletree: () => void | Promise<void>,
+  openPath: (path: string) => void
 ) => {
   const newPath = `${path}/${newName}`;
   const fileAlreadyExists = await exists(newPath);
@@ -305,6 +336,7 @@ const FiletreeInput = (props: FiletreeInputProps) => {
 
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if (ev.key === "Enter") handleBlur();
+    if (ev.key === "Escape") onCanceled();
   };
 
   return (
