@@ -1,13 +1,11 @@
-import { useCmdk, useSettings } from "@/hooks";
+import { useSettings } from "@/hooks";
 import { Settings, Vault } from "lucide-react";
 import TitlebarSpace from "@/components/TaskbarSpace";
 import { useRef } from "react";
 import VaultPrompt from "./VaultPrompt";
-import { shortcutKeysToString } from "./common/Kbd";
 
 function Sidebar() {
   const { openSettings } = useSettings();
-  const { setInterfaceContext, findCmdkCommand } = useCmdk();
 
   const vaultPromptRef = useRef<HTMLDialogElement>(null);
 
@@ -22,18 +20,15 @@ function Sidebar() {
             text="Vault"
             onClick={() => {
               vaultPromptRef.current?.showModal();
-              setInterfaceContext("vault-prompt");
-              const firstFocusable = vaultPromptRef.current?.querySelector(
-                "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+              let firstFocusable = vaultPromptRef.current?.querySelector(
+                "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
               ) as HTMLElement;
               firstFocusable?.blur();
             }}
           />
           <SidebarItem
             icon={<Settings size={16} />}
-            text={`Settings ${shortcutKeysToString(
-              findCmdkCommand("settings")?.key ?? ""
-            )}`}
+            text="Settings"
             onClick={openSettings}
           />
         </ul>

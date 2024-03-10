@@ -1,3 +1,4 @@
+import { checkConfigFile } from "@/utils/config";
 import React, {
   createContext,
   useContext,
@@ -5,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { useConfig, useFiletree, checkConfigFile } from "@/hooks";
+import { useFiletree } from "@/hooks";
 import { Store } from "tauri-plugin-store-api";
 import { z } from "zod";
 
@@ -32,12 +33,7 @@ const LastOpenedVaultSchema = z.object({
 const VaultProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentVaultPath, setCurrentVaultPath] = useState<string | null>(null);
   const [vaultConfig, setVaultConfig] = useState<VaultConfig>({});
-  const [openedPath, setOpenedPath] = useState<string | null>(null);
-  const { updateCurrentVaultPath } = useConfig();
-
-  useEffect(() => {
-    updateCurrentVaultPath(currentVaultPath);
-  }, [currentVaultPath]);
+  const [openedPath, openPath] = useState<string | null>(null);
 
   const { openFiletree } = useFiletree();
 
@@ -61,7 +57,7 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const openLastOpenedVault = async (): Promise<void> => {
     const lastOpenedVault = LastOpenedVaultSchema.safeParse(
-      await store.get("last_opened_vault")
+      await store.get("last_opened_vault"),
     );
     if (lastOpenedVault.success) {
       openVaultFromPath(lastOpenedVault.data.path);
@@ -86,10 +82,10 @@ const VaultProvider = ({ children }: { children: React.ReactNode }) => {
       vaultConfig,
       setVaultConfig,
       openedPath,
-      openPath: setOpenedPath,
+      openPath,
       closeVault,
     }),
-    [currentVaultPath, vaultConfig, openedPath]
+    [currentVaultPath, vaultConfig, openedPath],
   );
 
   return (
