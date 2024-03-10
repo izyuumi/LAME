@@ -97,7 +97,7 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentInterface, setCurrentInterface] =
     useState<InterfaceContext>("filetree");
 
-  const cmdkOpenCommand: Command = {
+  const openCmdk: Command = {
     key: "Mod+k",
     label: "Open Command Menu",
     hideOnCommandMenu: true,
@@ -120,7 +120,7 @@ const CmdkProvider = ({ children }: { children: React.ReactNode }) => {
   const findCommand = (id: string) => commands[id];
 
   useEffect(() => {
-    addCommands({ cmdkOpenCommand });
+    addCommands({ cmdkOpenCommand: openCmdk });
   }, []);
 
   const value: CmdkContextType = useMemo(
