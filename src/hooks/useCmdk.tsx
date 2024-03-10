@@ -179,7 +179,7 @@ const CommandComponent = ({
 };
 
 const CommandKMenu = () => {
-  const { cmdkIsOpen, closeCmdk, setCmdkIsOpen, cmdkCommands } = useCmdk();
+  const { cmdkIsOpen, setCmdkIsOpen, cmdkCommands } = useCmdk();
 
   return (
     <>
@@ -202,30 +202,51 @@ const CommandKMenu = () => {
           {Object.entries(cmdkCommands).map(
             ([id, command]) =>
               !command.hideOnCommandMenu && (
-                <CommandJSX.Item
-                  key={id}
-                  onSelect={() => {
-                    closeCmdk();
-                    setTimeout(() => {
-                      command.action();
-                    }, 50);
-                  }}
-                  className="cursor-pointer rounded-md p-2 hover:bg-gray-800 aria-selected:bg-gray-800"
-                >
-                  <div className="flex justify-between items-center">
-                    <p>{command.label}</p>
-                    <div>
-                      {command.key.split("+").map((key) => (
-                        <Kbd key={key} k={key} />
-                      ))}
-                    </div>
-                  </div>
-                </CommandJSX.Item>
+                <CommandKMenuItem key={id} command={command} />
               )
           )}
         </CommandJSX.List>
       </CommandJSX.Dialog>
     </>
+  );
+};
+
+const CommandKMenuItem = ({ command }: { command: Command }) => {
+  const { closeCmdk } = useCmdk();
+
+  const closeCmdkAndInvoke = () => {
+    closeCmdk();
+    setTimeout(() => {
+      command.action();
+    }, 50);
+  };
+
+  useHotkeys(
+    command.key,
+    () => {
+      if (command.disabled) return;
+      if (command.disabledOn?.includes("cmdk")) return;
+      closeCmdkAndInvoke();
+    },
+    {
+      enableOnFormTags: ["INPUT", "TEXTAREA"],
+    }
+  );
+
+  return (
+    <CommandJSX.Item
+      onSelect={closeCmdkAndInvoke}
+      className="cursor-pointer rounded-md p-2 hover:bg-gray-800 aria-selected:bg-gray-800"
+    >
+      <div className="flex justify-between items-center">
+        <p>{command.label}</p>
+        <div>
+          {command.key.split("+").map((key) => (
+            <Kbd key={key} k={key} />
+          ))}
+        </div>
+      </div>
+    </CommandJSX.Item>
   );
 };
 
