@@ -2,6 +2,7 @@ import { useSettings } from "@/hooks";
 import SettingsShortcuts from "./SettingsShortcuts";
 import { useState } from "react";
 import SettingsGeneral from "./SettingsGeneral";
+import { twMerge } from "tailwind-merge";
 
 interface SettingsPage {
   [key: string]: React.ReactNode;
@@ -25,7 +26,10 @@ function Settings() {
           {Object.keys(settingsPages).map((page) => (
             <li key={page} className="w-full">
               <button
-                className="btn btn-ghost h-full w-full rounded-md"
+                className={twMerge(
+                  "btn btn-ghost h-full w-full rounded-md",
+                  currentPage === page && "btn-active"
+                )}
                 onClick={() =>
                   setCurrentPage(page as keyof typeof settingsPages)
                 }
