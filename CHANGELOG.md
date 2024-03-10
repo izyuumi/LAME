@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/izyuumi/LAME/compare/v0.8.0...v0.8.1) (2024-03-10)
+
+
+### Bug Fixes
+
+* retry 375ffa9 ([a0ea22f](https://github.com/izyuumi/LAME/commit/a0ea22fbae401eb7a23e93965c07936f83e7ad2c))
+
+
+
 # [0.8.0](https://github.com/izyuumi/LAME/compare/v0.7.0...v0.8.0) (2024-03-10)
 
 
@@ -67,15 +76,6 @@
 ### Reverts
 
 * **ci:** use conventional-changelog-action ([49a4d73](https://github.com/izyuumi/LAME/commit/49a4d730efde3d24c7e1fe1e276f3e491edd127d))
-
-
-
-# [0.4.0](https://github.com/izyuumi/LAME/compare/v0.3.1...v0.4.0) (2024-03-09)
-
-
-### Features
-
-* **parser:** emit errors when parser return errors ([730c7ff](https://github.com/izyuumi/LAME/commit/730c7fffed3c91b890aa21cef85b50b195a34cfd))
 
 
 
