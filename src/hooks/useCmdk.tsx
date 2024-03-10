@@ -168,12 +168,13 @@ const CommandComponent = ({
       if (command.disabledOn?.includes(currentInterface)) return;
       if (command.enableOn && !command.enableOn.includes(currentInterface))
         return;
+      if (currentInterface === "cmdk") return;
       command.action();
     },
     {
       preventDefault: true,
     },
-    [command]
+    [command, currentInterface]
   );
   return null;
 };
