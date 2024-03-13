@@ -15,6 +15,14 @@
     padding: 0 1rem;
   }
 
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
   h1,
   h2,
   h3,
@@ -49,13 +57,10 @@
   }
 
   code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
+    background-color: theme("colors.base-300");
   }
 
   pre {
-    background: #0d0d0d;
-    color: #fff;
     font-family: "JetBrainsMono", monospace;
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
@@ -79,6 +84,6 @@
 
   blockquote {
     padding-left: 1rem;
-    border-left: 2px solid rgba(#0d0d0d, 0.1);
+    border-left: 2px solid theme("colors.base-300");
   }
 }
