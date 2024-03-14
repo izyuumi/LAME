@@ -103,7 +103,7 @@ function Filetree() {
   if (!currentVaultPath) return null;
 
   return (
-    <div className="bg-base-300 h-screen overflow-x-visible">
+		<div className="flex flex-col bg-base-300 overflow-y-auto overflow-x-visible">
       <TitlebarSpace />
       <div className="flex w-full justify-center gap-2 pb-2 relative">
         <div
@@ -130,7 +130,7 @@ function Filetree() {
       <ul
         ref={filetreeRef}
         className={tm(
-          "bg-base-300 flex select-none flex-col items-start justify-start p-1 max-h-full overflow-y-auto overflow-x-hidden"
+					"bg-base-300 flex select-none flex-col items-start justify-start p-1 flex-1 overflow-y-auto overflow-x-hidden",
         )}
       >
         {filetree.map(
