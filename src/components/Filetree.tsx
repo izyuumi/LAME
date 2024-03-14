@@ -103,7 +103,7 @@ function Filetree() {
   if (!currentVaultPath) return null;
 
   return (
-		<div className="flex flex-col bg-base-300 overflow-y-auto overflow-x-visible">
+		<div className="flex flex-col bg-base-300 overflow-y-auto overflow-x-hidden h-full">
       <TitlebarSpace />
       <div className="flex w-full justify-center gap-2 pb-2 relative">
         <div
