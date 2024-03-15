@@ -14,3 +14,15 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+.vertical-scrollbar::-webkit-scrollbar {
+  appearance: none;
+  background-color: transparent;
+  width: 8px;
+}
+
+.vertical-scrollbar::-webkit-scrollbar-thumb {
+  background-color: theme("colors.base-200");
+  border-radius: 9999px;
+  background-clip: padding-box;
+}

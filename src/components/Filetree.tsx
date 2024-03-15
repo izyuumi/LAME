@@ -130,7 +130,7 @@ function Filetree() {
       <ul
         ref={filetreeRef}
         className={tm(
-					"bg-base-300 flex select-none flex-col items-start justify-start p-1 flex-1 overflow-y-auto overflow-x-hidden",
+					"bg-base-300 flex select-none flex-col items-start justify-start p-1 flex-1 overflow-y-auto overflow-x-hidden vertical-scrollbar",
         )}
       >
         {filetree.map(
