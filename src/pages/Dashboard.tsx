@@ -6,15 +6,19 @@ import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { invoke as TAURI_INVOKE } from "@tauri-apps/api";
 import { twMerge as tm } from "tailwind-merge";
 import MenuBar from "@/components/editor/MenuBar";
+import { renameFile } from "@/utils";
+import { message } from "@tauri-apps/api/dialog";
 
 export function Dashboard() {
 	const navigate = useNavigate();
-	const { currentVaultPath, openedPath } = useVault();
+	const { currentVaultPath, openedPath, openPath } = useVault();
+	const [currentPath, setCurrentPath] = useState<string>("");
+
 	const { setInterfaceContext } = useCmdk();
 	const [lastOpenedPath, setLastOpenedPath] = useState<string | null>(null);
 
@@ -75,17 +79,47 @@ export function Dashboard() {
 	useEffect(() => {
 		readFile();
 		editor?.commands.focus();
+		currentVaultPath &&
+			setCurrentPath(openedPath?.replace(currentVaultPath, "") ?? "");
 	}, [openedPath]);
+
+	// Rename file on enter
+	const onFileRename = async (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key !== "Enter") return;
+		if (!openedPath || !currentVaultPath || !currentPath || !editor) return;
+		if (currentPath === openedPath.replace(currentVaultPath, "")) return;
+		await saveToDisk(editor.getHTML(), openedPath);
+		const newPath = `${currentVaultPath}/${currentPath}`.replace("//", "/");
+		const res = await renameFile(openedPath, newPath);
+		switch (res) {
+			case "success":
+				openPath(newPath);
+				break;
+			case "destIsNotEmpty":
+				await message("Destination is not empty");
+				setCurrentPath(openedPath.replace(currentVaultPath, ""));
+				break;
+			case "somethingWentWrong":
+				await message("Something went wrong");
+				setCurrentPath(openedPath.replace(currentVaultPath, ""));
+				break;
+		}
+	};
 
 	return (
 		<div className="flex h-screen w-full flex-col items-center justify-center">
 			<TitlebarSpace className="flex h-auto items-center justify-between border-b border-solid border-b-black p-2">
 				<div />
-				<h1 className="max-w-full overflow-hidden text-ellipsis">
-					{openedPath &&
-						currentVaultPath &&
-						openedPath.replace(currentVaultPath, "")}
-				</h1>
+				{openedPath && (
+					<h1 className="max-w-full overflow-hidden text-ellipsis">
+						<input
+							className="text-center"
+							value={currentPath}
+							onChange={(e) => setCurrentPath(e.target.value)}
+							onKeyDown={(e) => onFileRename(e)}
+						/>
+					</h1>
+				)}
 				<div>{editor && <MenuBar editor={editor} />}</div>
 			</TitlebarSpace>
 			<div className="mb-4 h-full w-full overflow-auto">
