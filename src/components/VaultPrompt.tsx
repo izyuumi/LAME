@@ -3,9 +3,9 @@ import { RefObject } from "react";
 
 function VaultPrompt({
   dialogRef,
-}: {
+}: Readonly<{
   dialogRef: RefObject<HTMLDialogElement>;
-}) {
+}>) {
   const { closeVault } = useVault();
 
   return (

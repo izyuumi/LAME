@@ -54,8 +54,10 @@ export function Onboard() {
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
       <h1>Welcome to the LAME</h1>
       <p>
-        <strong>L</strong>OL <strong>A</strong>nother <strong>M</strong>
-        arkdown <strong>E</strong>ditor
+        <strong>L</strong>OL&nbsp;
+        <strong>A</strong>nother&nbsp;
+        <strong>M</strong>arkdown&nbsp;
+        <strong>E</strong>ditor
       </p>
       <p>Drag and drop a directory to get started</p>
       <button

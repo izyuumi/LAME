@@ -19,6 +19,7 @@ function SettingsGeneral() {
           className="select select-bordered w-full max-w-xs"
           data-choose-theme
           data-key="user-theme"
+          id="user-theme"
         >
           <option value="black">Black</option>
           <option value="wireframe">Wireframe</option>
@@ -27,7 +28,6 @@ function SettingsGeneral() {
       <div className="divider" />
       <div className="flex items-center justify-center gap-4">
         <button
-          role="button"
           className="btn btn-ghost btn-sm btn-circle"
           onClick={() =>
             open("https://github.com/izyuumi/LAME/releases/latest")
