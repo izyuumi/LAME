@@ -31,6 +31,9 @@ function VaultPrompt({
           </button>
         </div>
       </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close settings modal</button>
+      </form>
     </dialog>
   );
 }
