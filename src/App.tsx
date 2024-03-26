@@ -2,7 +2,7 @@ import "@/styles/main.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Sidebar from "@/components/Sidebar";
-import { Onboard, Dashboard } from "@/pages";
+import { Onboard, Dashboard, Login } from "@/pages";
 import Filetree from "@/components/Filetree";
 import Settings from "@/components/settings";
 import { themeChange } from "theme-change";
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
 	{
 		path: "/dashboard",
 		element: <Dashboard />,
+	},
+	{
+		path: "/login",
+		element: <Login />,
 	},
 ]);
 
